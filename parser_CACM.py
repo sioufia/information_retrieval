@@ -1,10 +1,4 @@
-"""File that's gonna parse the CACM collection into different files. One file correspond to one document"""
-
-def append_doc(doc_number,content):
-    filename="CACM_traite/CACM_" + doc_number +'.txt'
-    with open(filename, 'a') as f:
-        f.write(content)
-    f.close()
+"""File that's gonna parse the CACM collection into a dictionnary. One file correspond to one document"""
 
 def check_start_document(line):
     if line[:2] == ".I":
@@ -19,20 +13,18 @@ def check_section_line(line):
     else:
         return False
 
-with open("CACM/cacm.all", "r") as f:
-    doc_number = '0'
-    doc_section = '0'
-    for line in f:
-        if check_section_line(line):
-            doc_section = str(line[:2])
-            if check_start_document(line):
-                doc_number = str(line[3:])
-                filename="CACM_traite/CACM_" + doc_number +'.txt'
-                with open(filename, 'a') as f2:
-                    f2.write(line)
-                f2.close() 
-            if doc_section in [".T",".W",".K"]:
-                append_doc(doc_number,line)
-        elif doc_section in [".I",".T",".W",".K"]:
-            append_doc(doc_number,line)
+def parser():
+    with open("CACM/cacm.all", "r") as f:
+        doc_number = '0'
+        doc_section = '0'
+        D = {}
+        for line in f:
+            if check_section_line(line):
+                doc_section = str(line[:2])
+                if check_start_document(line):
+                    doc_number = (str(line[3:]))[:-1]
+                    D[doc_number] = "" 
+            elif doc_section in [".I",".T",".W",".K"]:
+                D[doc_number] += " " + line[:-1]
+        return D
 
