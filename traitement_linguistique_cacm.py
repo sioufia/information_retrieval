@@ -1,6 +1,8 @@
 import nltk
 from parser_CACM import *
 
+"""Ce fichier gère le traitement linguistique de la collection CACM"""
+
 def stock_stopwords_list(filename):
     with open(filename, "r") as f:
         L = []
