@@ -1,5 +1,5 @@
-from traitement_linguistique_cacm import *
-from index_basique import *
+from .traitement_linguistique_cacm import *
+from .index_basique import *
 import time
 
 def main_CACM():

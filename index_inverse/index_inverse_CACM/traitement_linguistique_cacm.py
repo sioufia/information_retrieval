@@ -1,5 +1,5 @@
 import nltk
-from parser_CACM import *
+from .parser_CACM import *
 
 """Ce fichier gère le traitement linguistique de la collection CACM"""
 

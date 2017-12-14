@@ -14,7 +14,7 @@ def check_section_line(line):
         return False
 
 def parser():
-    with open("CACM/cacm.all", "r") as f:
+    with open("././CACM/cacm.all", "r") as f:
         doc_number = '0'
         doc_section = '0'
         D = {}
