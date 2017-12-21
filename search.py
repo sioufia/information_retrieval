@@ -12,11 +12,11 @@ class SearchBoolean(Search):
     def __init__(self, request):
         Search.__init__(self, request)
         
-        allowed_operators = ['AND', 'OR', 'NOT']
+        """allowed_operators = ['AND', 'OR', 'NOT']"""
         request_list = self.request.split()
         
-        if len(request_list)%2 == 0:
-            raise ValueError("La requête n'est pas au bon format")
+        """if len(request_list)%2 == 0:
+            raise ValueError("La requête n'est pas au bon format")"""
         
         """i = 1
         while i < len(request_list):
@@ -47,20 +47,26 @@ class SearchBoolean(Search):
             return list(set_postings1.difference(set_postings2))
     
     def do_search(self, index):
-        terme1_postings = index.get_termeid_postings(self.request[0])
-        if len(self.request) == 1:
-            return terme1_postings
-        
-        else:
-            terme2_postings = index.get_termeid_postings(self.request[2])
-            current_fusion = SearchBoolean.operator_action(terme1_postings, self.request[1], terme2_postings)
+        """Method that that takes an index and a search object and return the fusion of the different postings"""
+        allowed_operators = ['AND', 'OR', 'NOT']
+        current_fusion = index.get_termeid_postings(self.request[0])
+        """if len(self.request) == 1:
+            return terme1_postings"""
+        i = 1
+        while i < len(self.request):
+            if self.request[i] in allowed_operators:
+                try:
+                    current_fusion = SearchBoolean.operator_action(current_fusion, self.request[i], index.get_termeid_postings(self.request[i+1]))
+                    i += 2
+                except IndexError:
+                    #Case where the request is finished by an operator
+                    return current_fusion
+            else:
+                #case where 2 strings are not seperated by an operator. It is considered as AND
+                current_fusion = SearchBoolean.operator_action(current_fusion, 'AND', index.get_termeid_postings(self.request[i]))
+                i += 1
+        return current_fusion
 
-            i = 3
-            while i < len(self.request):
-                current_fusion = SearchBoolean.operator_action(current_fusion, self.request[i], index.get_termeid_postings(self.request[i+1]))
-                i = i + 2
-
-            return current_fusion
 
 class SearchVector(Search):
     pass
