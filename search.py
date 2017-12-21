@@ -6,26 +6,21 @@ class Search():
             raise TypeError("La requête doit être une chaîne de caractère")
 
         self.request = request
+    
+    def display_docs(postings):
+        """Method that displays the document number of postings list"""
+        if len(postings) == 0:
+            print ("No results found")
+        i = 1
+        for doc in postings:
+            print("Result {0} : Document {1} ".format(i, doc))
+            i += 1
 
 class SearchBoolean(Search):
     
     def __init__(self, request):
         Search.__init__(self, request)
-        
-        """allowed_operators = ['AND', 'OR', 'NOT']"""
         request_list = self.request.split()
-        
-        """if len(request_list)%2 == 0:
-            raise ValueError("La requête n'est pas au bon format")"""
-        
-        """i = 1
-        while i < len(request_list):
-            try:
-                if request_list[i] not in allowed_operators or  :
-                    raise ValueError("Opérateur non autorise. Les opérateurs acceptés sont AND, OR et NOT")
-                else:
-                    i = i + 1"""
-        
         self.request = request_list
     
     def operator_action(postings1, operator, postings2):
@@ -65,8 +60,8 @@ class SearchBoolean(Search):
                 #case where 2 strings are not seperated by an operator. It is considered as AND
                 current_fusion = SearchBoolean.operator_action(current_fusion, 'AND', index.get_termeid_postings(self.request[i]))
                 i += 1
+        
         return current_fusion
-
 
 class SearchVector(Search):
     pass

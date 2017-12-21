@@ -2,6 +2,7 @@ from index_inverse.index_inverse_CACM.main import *
 #from index_inverse.index_inverse_Stanford.main import *
 from search import Search, SearchBoolean, SearchVector
 from index_inverse.index_inverse_class import Index
+import time
 
 
 def search_engine(collection):
@@ -18,13 +19,17 @@ def search_engine(collection):
 
     while user_request != "Stop":
         if type_search == "boolean":
-            try:
-                current_search = SearchBoolean(user_request)
-                print (current_search.do_search(index))
-                user_request = input("Recherche ")
-            except ValueError:
-                user_request = input("Les opérateurs autorisés sont AND, OR et NOT ")
+            start_time = time.time()
+            current_search = SearchBoolean(user_request)
+            result_list = current_search.do_search(index)
+            Search.display_docs(result_list)
+            print("Results in %s seconds ---" % (time.time() - start_time))
+            user_request = input("Recherche ")
 
+        else:
+            type_search = input("boolean or vector ")
+            user_request = input("Recherche ")
+        
         """if type_search != "vector":
             current_search = SearchVector(user_request)"""
         
