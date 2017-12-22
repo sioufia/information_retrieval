@@ -5,7 +5,9 @@ from index_inverse.index_inverse_class import Index
 import time
 
 
-def search_engine(collection):
+def search_engine():
+    collection = input("Collection: ")
+
     #Generated the index from the collection
     if collection == "cacm":
         terme_termeid, termeid_postings = main_CACM()  
@@ -22,18 +24,25 @@ def search_engine(collection):
             start_time = time.time()
             current_search = SearchBoolean(user_request)
             result_list = current_search.do_search(index)
-            Search.display_docs(result_list)
+            Search.display_docs(result_list, type_search)
+            print("Results in %s seconds ---" % (time.time() - start_time))
+            user_request = input("Recherche ")
+        
+        elif type_search == "vector":
+            start_time = time.time()
+            current_search = SearchVector(user_request)
+            result_list = current_search.do_search(index, 10)
+            Search.display_docs(result_list, type_search)
             print("Results in %s seconds ---" % (time.time() - start_time))
             user_request = input("Recherche ")
 
         else:
             type_search = input("boolean or vector ")
             user_request = input("Recherche ")
-        
-        """if type_search != "vector":
-            current_search = SearchVector(user_request)"""
-        
-    
 
-search_engine("cacm")
+
+search_engine()
+
+
+
 
