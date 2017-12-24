@@ -43,6 +43,11 @@ def search_engine():
 
 search_engine()
 
+"""def test():
+    terme_termeid, termeid_postings = main_CACM()
+    return terme_termeid, termeid_postings"""
+
+
 
 
 

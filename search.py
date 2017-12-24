@@ -1,4 +1,4 @@
-#from index_inverse.index_inverse_class import Index
+from index_inverse.index_inverse_class import Index
 from index_inverse.index_inverse_CACM.index_basique import index_inverse
 
 import operator
@@ -83,8 +83,6 @@ class SearchVector(Search):
 
         #Generate the index of the search request
         search_term_termid, search_termeid_posting = self.construct_index_search()
-        print (search_term_termid)
-        print (search_termeid_posting)
 
         index_term_termid = index_collection.D_terme_termeid
         index_termid_postings = index_collection.D_termeid_postings
@@ -92,15 +90,15 @@ class SearchVector(Search):
         for term_request in search_term_termid:
             #get the postings of the term_request in the index
             
-            if term_request in index_term_termid: 
-                postings = index_termid_postings[index_term_termid[term_request]]
+            postings = index_collection.get_termeid_postings(term_request)
+            if len(postings) > 0:
                 for doc in postings:
                     if doc in sj:
                         sj[doc] += postings[doc] * search_termeid_posting[search_term_termid[term_request]]['q']
                     else:
                         sj[doc] = postings[doc] * search_termeid_posting[search_term_termid[term_request]]['q']
         
-        sorted_sj = sorted(sj.items(), key=operator.itemgetter(1))
+        sorted_sj = sorted(sj.items(), key=operator.itemgetter(1), reverse=True)
         return sorted_sj[:k]
         
              
