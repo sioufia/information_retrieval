@@ -1,7 +1,5 @@
-from index_inverse.index_inverse_CACM.main import *
-#from index_inverse.index_inverse_Stanford.main import *
+from index_inverse.index_inverse_CACM.construction_index_cacm_class import ConstructionIndex, ConstructionIndexCACM
 from search import Search, SearchBoolean, SearchVector
-from index_inverse.index_inverse_class import Index
 import time
 
 
@@ -10,11 +8,16 @@ def search_engine():
 
     #Generated the index from the collection
     if collection == "cacm":
-        terme_termeid, termeid_postings = main_CACM()  
+        start_time = time.time()
+        index = ConstructionIndexCACM()
+        index.parser("CACM/cacm.all")
+        index.segmenter()
+        index.traiter_tokens_collection("CACM/common_words")
+        nb_doc = index.index_inverse()
+        index.weight_calculation_index(nb_doc)
+        print("Index construction : %s seconds " % (time.time() - start_time))
     elif collection == "stanford":
-        terme_termeid, termeid_postings = main_STANFORD()
-    
-    index = Index(terme_termeid, termeid_postings)
+        print ('Still need to be filled')
 
     type_search = input("boolean or vector ")
     user_request = input("Recherche ")
@@ -31,7 +34,7 @@ def search_engine():
         elif type_search == "vector":
             start_time = time.time()
             current_search = SearchVector(user_request)
-            result_list = current_search.do_search(index, 10)
+            result_list = current_search.do_search(index, 20)
             Search.display_docs(result_list, type_search)
             print("Results in %s seconds ---" % (time.time() - start_time))
             user_request = input("Recherche ")
