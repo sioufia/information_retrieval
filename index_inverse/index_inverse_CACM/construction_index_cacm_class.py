@@ -31,7 +31,7 @@ class ConstructionIndex():
         for elt in self.collection_dic:
             collection_without_stopwords[elt] = []
             for token in self.collection_dic[elt]:
-                if (token.lower() not in stopwords) and (token.lower() not in [",",".",";",")","(","?"]):
+                if (token.lower() not in stopwords) and (token.lower() not in [",",".",";",")","(","?","\t","\\"]):
                     collection_without_stopwords[elt].append(token.lower())
         self.collection_dic = collection_without_stopwords
 

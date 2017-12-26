@@ -78,7 +78,6 @@ class SearchVector(Search):
         index_inverse_search.traiter_tokens_collection("CACM/common_words")
         nb_doc = index_inverse_search.index_inverse()
         index_inverse_search.weight_calculation_index(nb_doc)
-        print (index_inverse_search.D_terme_termeid)
         return index_inverse_search
 
     def do_search(self, index_collection, k="no_limit"):
