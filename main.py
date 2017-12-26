@@ -1,5 +1,5 @@
 from index_inverse.index_inverse_CACM.construction_index_cacm_class import ConstructionIndex, ConstructionIndexCACM
-from search import Search, SearchBoolean, SearchVector
+from search.search import Search, SearchBoolean, SearchVector
 import time
 
 

@@ -81,7 +81,7 @@ class SearchVector(Search):
         print (index_inverse_search.D_terme_termeid)
         return index_inverse_search
 
-    def do_search(self, index_collection, k):
+    def do_search(self, index_collection, k="no_limit"):
         """Takes a inverse index and do a vectorial search. Index_inverse in an Index Object """
         #The dictionnary with the classment of the doc with their score
         sj = {}
@@ -104,7 +104,10 @@ class SearchVector(Search):
                         sj[doc] = postings[doc] * index_inverse_search.D_terme_id_postings[index_inverse_search.D_terme_termeid[term_request]]['q']
         
         sorted_sj = sorted(sj.items(), key=operator.itemgetter(1), reverse=True)
-        return sorted_sj[:k]
+        if k == "no_limit":
+            return sorted_sj
+        else:
+            return sorted_sj[:k]
         
              
 
