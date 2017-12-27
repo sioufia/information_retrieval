@@ -21,7 +21,7 @@ class Search():
 
         elif type_of_search == "boolean":
             for doc in postings:
-                print("Result {0} : Document {1} ".format(i, doc[0]))
+                print("Result {0} : Document {1} ".format(i, doc))
                 i += 1
 
 class SearchBoolean(Search):
@@ -30,13 +30,15 @@ class SearchBoolean(Search):
         self.request = request.split()
     
     def operator_action(postings1, operator, postings2):
-        if not isinstance(postings1, list):
-            raise TypeError("Les postings doivent être sous le format liste")
-        if not isinstance(postings2, list):
-            raise TypeError("Les postings doivent être sous le format liste")
+        if isinstance(postings1, dict):
+            set_postings1 = set(list(postings1.keys()))
+        elif isinstance(postings1, list):
+            set_postings1 = set(postings1)
         
-        set_postings1 = set(postings1)
-        set_postings2 = set(postings2)
+        if isinstance(postings2, dict):
+            set_postings2 = set(list(postings2.keys()))
+        elif isinstance(postings2, list):
+            set_postings2 = set(postings2)
 
         if operator == "AND":
             return list(set_postings1.intersection(set_postings2))
@@ -47,7 +49,7 @@ class SearchBoolean(Search):
         if operator == "NOT":
             return list(set_postings1.difference(set_postings2))
     
-    def do_search(self):
+    def do_search(self, index):
         """Method that that takes an index and a search object and return the fusion of the different postings"""
         allowed_operators = ['AND', 'OR', 'NOT']
         current_fusion = index.get_termeid_postings(self.request[0])

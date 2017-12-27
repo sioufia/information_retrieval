@@ -3,6 +3,7 @@ from math import *
 
 class ConstructionIndex():
     def __init__(self, collection_dic = {}):
+        #collection_dic is a dictionnary with the doc number as key and the content of the doc as value
         self.collection_dic = collection_dic 
         self.D_terme_termeid = {}
         self.D_terme_id_postings = {}
@@ -123,7 +124,7 @@ class ConstructionIndexCACM(ConstructionIndex):
     
     def parser(self, filename):
         """Method that takes a file with several documents as entry.
-           It updates the collection_dic with the doc number as key, and the content
+           It updates the collection_dic attribute with the doc number as key, and the content
            of the doc as value"""
         
         with open(filename, "r") as f:
