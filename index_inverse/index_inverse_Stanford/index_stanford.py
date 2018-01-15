@@ -37,8 +37,11 @@ class IndexStanford:
         for i in range(0, 9):  # Browsing blocks
             print(i)
             path_temp = path + str(i) + "/"
+            print("path_temp:" +  path_temp)
             for root, dirs, files in os.walk(path_temp):
+                print("file:" +  files)
                 for file in files:
+                    print("file:" +  file)
                     filename = str(i) + file
                     self.dico_docID[self.docID] = filename
 
@@ -54,6 +57,7 @@ class IndexStanford:
 
                         for w in self.wordList:
                             if not w in self.dico_termID.keys(): #Checking if the term already exists in the dictionnary
+                                print('OK')
                                 self.dico_termID[w] = self.termID
                                 self.dico_index[self.termID] = [self.docID]
                                 self.termID += 1
@@ -63,7 +67,7 @@ class IndexStanford:
                     self.docID += 1
 
 
-index = IndexStanford()
-index.indexConstruction("C:/Users/titou/Desktop/Centrale/Option OSY/RI-W/pa1-data (1)/pa1-data/")
+#index = IndexStanford()
+#index.indexConstruction("C:/Users/alexandresioufi/Documents/Projets infos/recherche/pa1-data/")
 
 
