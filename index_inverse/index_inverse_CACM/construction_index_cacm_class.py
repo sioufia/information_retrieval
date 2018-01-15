@@ -1,7 +1,7 @@
 import nltk
 from math import *
 
-class ConstructionIndex():
+class ConstructionIndex:
     def __init__(self, collection_dic = {}):
         #collection_dic is a dictionnary with the doc number as key and the content of the doc as value
         self.collection_dic = collection_dic 
