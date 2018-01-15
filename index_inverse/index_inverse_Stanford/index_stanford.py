@@ -23,7 +23,8 @@ class IndexStanford:
         wordList_filtered = [w for w in wordList if not w in self.stop_words]
         return wordList_filtered
 
-    def lineSplit(self,line): #Split a line of words into a list of words
+    @staticmethod
+    def lineSplit(line): #Split a line of words into a list of words
         return line.split()
 
     def lemmatisation(self,wordList):

@@ -1,4 +1,5 @@
 from index_inverse.index_inverse_CACM.construction_index_cacm_class import ConstructionIndex, ConstructionIndexCACM
+from index_inverse.index_inverse_Stanford.index_stanford import IndexStanford
 from search.search import Search, SearchBoolean, SearchVector
 import time
 
@@ -17,7 +18,11 @@ def search_engine():
         index.weight_calculation_index(nb_doc)
         print("Index construction : %s seconds " % (time.time() - start_time))
     elif collection == "stanford":
-        print ('Still need to be filled')
+        start_time = time.time()
+        index = IndexStanford()
+        path = input("Path for stanford collection")
+        index.indexConstruction(path)
+        print("Index construction : %s seconds " % (time.time() - start_time))
 
     type_search = input("boolean or vector ")
     user_request = input("Recherche ")
