@@ -102,16 +102,50 @@ class IndexStanfordCompressed(IndexStanford):
                                     self.dico_index[self.dico_termID[w]].append(previous_doc_id)
 
                     self.docID += 1
+        
+        #Loop to encode with variable bytes the doc differences
+        for termID in self.dico_index:
+            for doc in self.dico_index[termID]:
+                doc = vb_encode(doc)
+    
+    def get_termeid_postings(self, term):
+        if not isinstance(term, str):
+            raise TypeError("Le terme cherché doit être sous format chaîne de caractère")
+        
+        if term in self.dico_termID:
+            postings = []
+            postings_bytes = self.dico_index[self.dico_termID[term]]
+            for vb_doc in postings_bytes:
+                doc = vb_decode(vb_doc)
+                if len(postings) == 0:
+                    postings.append(doc)
+                else:
+                    postings.append(doc + postings[-1])
+            return postings
+
+        else:
+            return []
 
 def vb_encode(number):
     bytes = []
+    c = "1"
     while True:
-        bytes.insert(0, number % 128)
         if number < 128:
+            binary_number = "{0:b}".format(number)
+            if len(binary_number) < 7:
+                binary_number = "0"*(7 - len(binary_number)) + binary_number    
+            bytes = [(c + binary_number).encode('utf-8')] + bytes
             break
-        number /= 128
-    bytes[-1] += 128
-    return pack('%dB' % len(bytes), *bytes)
+        else:
+            binary_number = "{0:b}".format(number % 128)
+            if len(binary_number) < 7:
+                binary_number = "0"*(7 - len(binary_number)) + binary_number 
+            bytes = [(c + binary_number).encode('utf-8')] + bytes
+            number = number // 128
+            c = "0"
+    return bytes
+    
+    
 
 def vb_decode(bytestream):
     n = 0
@@ -120,6 +154,7 @@ def vb_decode(bytestream):
     for byte in bytestream:
         if byte < 128:
             n = 128 * n + byte
+            numbers.append(n)
         else:
             n = 128 * n + (byte - 128)
             numbers.append(n)
