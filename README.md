@@ -15,3 +15,6 @@ Folder evaluation:
 
 File main:
 To run this file : python main.py --> The user will be able to make query. 
+
+Requirements:
+bitarray
