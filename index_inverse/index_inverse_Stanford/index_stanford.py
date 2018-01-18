@@ -8,15 +8,14 @@ import os
 class IndexStanford:
     def __init__(self):
         # Dictionnaries to build
-        self.dico_termID = {}  # {term:termID}
+        self.D_terme_termeid = {}  # {term:termID}
         self.dico_docID = {}  # {doc:docID}
-        self.dico_index = {}  # {termID:docID}
+        self.D_terme_id_postings = {}  # {termID:docID postings}
 
         nltk.download('stopwords')
         nltk.download('wordnet')
         self.stop_words = set(stopwords.words('english'))
         self.wl = WordNetLemmatizer()
-
 
 
     def removeStopWords(self,wordList): #Remove stop words from a list of words
@@ -53,17 +52,27 @@ class IndexStanford:
                         self.wordList = self.lemmatisation(self.wordList)
 
                         for w in self.wordList:
-                            if not w in self.dico_termID.keys(): #Checking if the term already exists in the dictionnary
-                                self.dico_termID[w] = self.termID
-                                self.dico_index[self.termID] = [self.docID]
+                            if not w in self.D_terme_termeid.keys(): #Checking if the term already exists in the dictionnary
+                                self.D_terme_termeid[w] = self.termID
+                                self.D_terme_id_postings[self.termID] = [self.docID]
                                 self.termID += 1
                             else:
-                                self.dico_index[self.dico_termID[w]] += [self.docID]
+                                self.D_terme_id_postings[self.D_terme_termeid[w]] += [self.docID]
 
                     self.docID += 1
 
+    def get_termeid_postings(self, terme):
+        if not isinstance(terme, str):
+            raise TypeError("Le terme cherché doit être sous format chaîne de caractère")
 
-index = IndexStanford()
-index.indexConstruction("C:/Users/titou/Desktop/Centrale/Option OSY/RI-W/pa1-data (1)/pa1-data/")
+        if terme in self.D_terme_termeid:
+            return (self.D_terme_id_postings[self.D_terme_termeid[terme]])
+
+        else:
+            return []
+
+
+# index = IndexStanford()
+# index.indexConstruction("C:/Users/titou/Desktop/Centrale/Option OSY/RI-W/pa1-data/")
 
 

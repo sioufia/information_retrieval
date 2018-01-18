@@ -13,13 +13,11 @@ wl = WordNetLemmatizer()
 
 class mapReduceStanford:
 
-    # lock = Lock()
-
     def __init__(self,path):
-
-        self.path = path
+        self.path =  path #path to the stanford library location
 
     def mapReducer(self):
+        """Function to perform map reduce approach on stanford"""
 
         global documents #List of documents to be treated
         documents = []
@@ -37,13 +35,12 @@ class mapReduceStanford:
         global dico_docID #Final dico for doc,docID
         dico_docID = {}
 
-        global continuer
+        global continuer #This variable makes sure reducers do not stop if the buffer is empty but mappers are still working
         continuer = True
 
         # Create the threads
-
         class CreateListDocuments(Thread):
-
+            """Thread to create a list of (doc path, docname, docID)"""
             def __init__(self,path):
                 Thread.__init__(self)
                 self.path = path
@@ -61,9 +58,10 @@ class mapReduceStanford:
                             docID += 1
 
         class Mapper(Thread):
+            """Thread to compute mapper part"""
 
             lock = Lock()
-            semaphore = Semaphore(5)
+            semaphore = Semaphore(10)
 
             def __init__(self):
                 Thread.__init__(self)
@@ -71,11 +69,6 @@ class mapReduceStanford:
             @staticmethod
             def lineSplit(line):  # Split a line of words into a list of words
                 return line.split()
-
-            # @staticmethod
-            # def shuffle_order(tuple_list):
-            #     a = sorted(tuple_list, key=operator.itemgetter(0))
-            #     return a
 
             @staticmethod
             def removeStopWords(wordList):  # Remove stop words from a list of words
@@ -85,17 +78,6 @@ class mapReduceStanford:
             @staticmethod
             def lemmatisation(wordList):
                 return list(map(wl.lemmatize, wordList))
-
-            # @staticmethod
-            # def return_docID():
-            #     return docID
-            #
-            # @staticmethod
-            # def increment_docID():
-            #     docID += 1
-
-            # def return_buffer(a):
-            #     buffer += [a]
 
             def run(self):
                 while documents != []:
@@ -135,9 +117,10 @@ class mapReduceStanford:
 
 
         class Reducer(Thread):
+            """Class to perform reducer part"""
 
             lock = Lock()
-            semaphore = Semaphore(5)
+            semaphore = Semaphore(10)
 
             def __init__(self):
                 Thread.__init__(self)
@@ -148,8 +131,8 @@ class mapReduceStanford:
 
                     Reducer.semaphore.acquire(self)
                     Reducer.lock.acquire()
+
                     t = buffer[0]
-                    print(t)
 
                     global index
                     if t[0] not in index.keys():
@@ -162,22 +145,22 @@ class mapReduceStanford:
                             index[t[0]][t[1]] += 1
 
                     del buffer[0]
-                    print("yo" + str(len(buffer)))
+                    print(len(buffer))
 
                     Reducer.lock.release()
                     Reducer.semaphore.release()
 
 
         # Run threads
-
         self.createDocs = CreateListDocuments("C:/Users/titou/Desktop/Centrale/Option OSY/RI-W/pa1-data (1)/pa1-data/")
         self.map = Mapper()
         self.red = Reducer()
 
+        # Start threads
         self.createDocs.start()
-        time.sleep(3)
+        time.sleep(3) #Let some time to fill the doc list
         self.map.start()
-        time.sleep(3)
+        time.sleep(3) #Let some time to fill the buffer
         self.red.start()
 
         #Wait for the mappers to finish

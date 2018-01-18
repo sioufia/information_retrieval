@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1d014d1b-99f6-4952-b959-ec667e6f3718" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index_inverse/index_inverse_Stanford/index_stanford.py" afterPath="$PROJECT_DIR$/index_inverse/index_inverse_Stanford/index_stanford.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index_inverse/index_inverse_Stanford/map_reduce_stanford.py" afterPath="$PROJECT_DIR$/index_inverse/index_inverse_Stanford/map_reduce_stanford.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/search/search.py" afterPath="$PROJECT_DIR$/search/search.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,18 +17,19 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/riproject$stanford_nltk.coverage" NAME="stanford_nltk Coverage Results" MODIFIED="1512651394394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/riproject$Correlation_selection.coverage" NAME="Correlation selection Coverage Results" MODIFIED="1515600461065" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../Projet/Correlation analysis" />
-    <SUITE FILE_PATH="coverage/riproject$index_stanford.coverage" NAME="index_stanford Coverage Results" MODIFIED="1516030064718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/index_inverse/index_inverse_Stanford" />
+    <SUITE FILE_PATH="coverage/riproject$index_stanford.coverage" NAME="index_stanford Coverage Results" MODIFIED="1516289827912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/index_inverse/index_inverse_Stanford" />
     <SUITE FILE_PATH="coverage/riproject$PCA.coverage" NAME="PCA Coverage Results" MODIFIED="1515614014296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../Projet/Correlation analysis" />
-    <SUITE FILE_PATH="coverage/riproject$map_reduce_stanford.coverage" NAME="map_reduce_stanford Coverage Results" MODIFIED="1516100634063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/index_inverse/index_inverse_Stanford" />
     <SUITE FILE_PATH="coverage/riproject$map_reduce_cacm.coverage" NAME="map_reduce_cacm Coverage Results" MODIFIED="1516286407092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/index_inverse/index_inverse_CACM" />
+    <SUITE FILE_PATH="coverage/riproject$map_reduce_stanford.coverage" NAME="map_reduce_stanford Coverage Results" MODIFIED="1516287979061" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/index_inverse/index_inverse_Stanford" />
+    <SUITE FILE_PATH="coverage/riproject$main.coverage" NAME="main Coverage Results" MODIFIED="1516290764742" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
       <file leaf-file-name="map_reduce_stanford.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index_inverse/index_inverse_Stanford/map_reduce_stanford.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2150">
-              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+            <state relative-caret-position="300">
+              <caret line="133" column="0" lean-forward="true" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -34,10 +37,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="map_reduce_cacm.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="map_reduce_cacm.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index_inverse/index_inverse_CACM/map_reduce_cacm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
+            <state relative-caret-position="4125">
               <caret line="165" column="18" lean-forward="false" selection-start-line="165" selection-start-column="18" selection-end-line="165" selection-end-column="18" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
@@ -46,21 +49,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="construction_index_cacm_class.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index_inverse/index_inverse_CACM/construction_index_cacm_class.py">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3125">
-              <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="250">
+              <caret line="34" column="29" lean-forward="false" selection-start-line="34" selection-start-column="29" selection-end-line="34" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#115#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="search.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/search/search.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38">
+              <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
+      <file leaf-file-name="construction_index_cacm_class.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index_inverse/index_inverse_CACM/construction_index_cacm_class.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-192">
-              <caret line="17" column="46" lean-forward="true" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
+            <state relative-caret-position="1325">
+              <caret line="114" column="13" lean-forward="true" selection-start-line="114" selection-start-column="13" selection-end-line="114" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -69,8 +84,8 @@
       <file leaf-file-name="index_stanford.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index_inverse/index_inverse_Stanford/index_stanford.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="850">
-              <caret line="37" column="20" lean-forward="false" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="20" />
+            <state relative-caret-position="262">
+              <caret line="76" column="0" lean-forward="true" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -96,7 +111,21 @@
       <find>cons</find>
       <find>documents</find>
       <find>print</find>
+      <find>dico_index</find>
+      <find>dico_docID</find>
+      <find>dico_termID</find>
+      <find>D_terme_id_postings</find>
+      <find>collection_dic</find>
+      <find>index</find>
+      <find>displ</find>
     </findStrings>
+    <replaceStrings>
+      <replace>collection_dic</replace>
+      <replace>D_</replace>
+      <replace>D_terme_termeID</replace>
+      <replace>D_terme_termeid</replace>
+      <replace>D_terme_id_postings</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -107,12 +136,13 @@
         <option value="$PROJECT_DIR$/parser_CACM.py" />
         <option value="$PROJECT_DIR$/stanford_nltk.py" />
         <option value="$PROJECT_DIR$/index_inverse/index_inverse_CACM/construction_index_cacm_class.py" />
-        <option value="$PROJECT_DIR$/index_inverse/index_inverse_Stanford/index_stanford.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/../../Projet/Correlation analysis/Correlation selection.py" />
         <option value="$PROJECT_DIR$/../../Projet/Correlation analysis/PCA.py" />
-        <option value="$PROJECT_DIR$/index_inverse/index_inverse_Stanford/map_reduce_stanford.py" />
         <option value="$PROJECT_DIR$/index_inverse/index_inverse_CACM/map_reduce_cacm.py" />
+        <option value="$PROJECT_DIR$/index_inverse/index_inverse_Stanford/map_reduce_stanford.py" />
+        <option value="$PROJECT_DIR$/index_inverse/index_inverse_Stanford/index_stanford.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/search/search.py" />
       </list>
     </option>
   </component>
@@ -162,6 +192,23 @@
               <item name="riproject" type="462c0819:PsiDirectoryNode" />
               <item name="index_inverse" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="riproject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="riproject" type="462c0819:PsiDirectoryNode" />
+              <item name="index_inverse" type="462c0819:PsiDirectoryNode" />
+              <item name="index_inverse_CACM" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="riproject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="riproject" type="462c0819:PsiDirectoryNode" />
+              <item name="index_inverse" type="462c0819:PsiDirectoryNode" />
+              <item name="index_inverse_Stanford" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="riproject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="riproject" type="462c0819:PsiDirectoryNode" />
+              <item name="search" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -185,25 +232,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.map_reduce_cacm">
-    <configuration name="Correlation selection" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../Projet/Correlation analysis" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="riproject" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../Projet/Correlation analysis/Correlation selection.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
+  <component name="RunManager" selected="Python.main">
     <configuration name="PCA" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -236,6 +265,24 @@
       <module name="riproject" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/index_inverse/index_inverse_Stanford/index_stanford.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="riproject" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -279,17 +326,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.index_stanford" />
       <item index="1" class="java.lang.String" itemvalue="Python.map_reduce_stanford" />
-      <item index="2" class="java.lang.String" itemvalue="Python.Correlation selection" />
-      <item index="3" class="java.lang.String" itemvalue="Python.PCA" />
-      <item index="4" class="java.lang.String" itemvalue="Python.map_reduce_cacm" />
+      <item index="2" class="java.lang.String" itemvalue="Python.PCA" />
+      <item index="3" class="java.lang.String" itemvalue="Python.map_reduce_cacm" />
+      <item index="4" class="java.lang.String" itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.map_reduce_cacm" />
-        <item index="1" class="java.lang.String" itemvalue="Python.map_reduce_stanford" />
-        <item index="2" class="java.lang.String" itemvalue="Python.index_stanford" />
-        <item index="3" class="java.lang.String" itemvalue="Python.PCA" />
-        <item index="4" class="java.lang.String" itemvalue="Python.Correlation selection" />
+        <item index="0" class="java.lang.String" itemvalue="Python.main" />
+        <item index="1" class="java.lang.String" itemvalue="Python.index_stanford" />
+        <item index="2" class="java.lang.String" itemvalue="Python.map_reduce_stanford" />
+        <item index="3" class="java.lang.String" itemvalue="Python.map_reduce_cacm" />
+        <item index="4" class="java.lang.String" itemvalue="Python.PCA" />
       </list>
     </recent_temporary>
   </component>
@@ -308,13 +355,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17760417" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32990867" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22706422" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39449543" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -385,7 +431,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
           <caret line="14" column="25" lean-forward="false" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
-          <folding />
+          <folding>
+            <element signature="e#0#115#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -429,7 +477,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
           <caret line="14" column="25" lean-forward="true" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
-          <folding />
+          <folding>
+            <element signature="e#0#115#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -534,13 +584,6 @@
     <entry file="file://$USER_HOME$/AppData/Local/Temp/Temp1_TP2_py.zip/TP2/exo2.py" />
     <entry file="file://$USER_HOME$/AppData/Local/Temp/Temp1_TP2_py.zip/TP2/main.py" />
     <entry file="file://$PROJECT_DIR$/index_inverse/index_inverse_Stanford/Stanford_index.py" />
-    <entry file="file://$PROJECT_DIR$/search/search.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="54" column="51" lean-forward="false" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../POOA/TP/TP2_py/TP2/exo3.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -558,14 +601,6 @@
     <entry file="file://$PROJECT_DIR$/../../Projet/Correlation analysis/Correlation selection" />
     <entry file="file://$PROJECT_DIR$/../../Projet/Correlation analysis/PCA.py" />
     <entry file="file://$PROJECT_DIR$/../../Projet/Correlation analysis/Correlation selection.py" />
-    <entry file="file://$PROJECT_DIR$/index_inverse/index_inverse_Stanford/index_stanford.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="37" column="20" lean-forward="false" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/threading.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1552">
@@ -573,38 +608,56 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index_inverse/index_inverse_CACM/map_reduce_cacm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4125">
+          <caret line="165" column="18" lean-forward="false" selection-start-line="165" selection-start-column="18" selection-end-line="165" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index_inverse/index_inverse_Stanford/map_reduce_stanford.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2150">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        <state relative-caret-position="300">
+          <caret line="133" column="0" lean-forward="true" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index_inverse/index_inverse_Stanford/index_stanford.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="76" column="0" lean-forward="true" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index_inverse/index_inverse_CACM/construction_index_cacm_class.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3125">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="1325">
+          <caret line="114" column="13" lean-forward="true" selection-start-line="114" selection-start-column="13" selection-end-line="114" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/search/search.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-192">
-          <caret line="17" column="46" lean-forward="true" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index_inverse/index_inverse_CACM/map_reduce_cacm.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="165" column="18" lean-forward="false" selection-start-line="165" selection-start-column="18" selection-end-line="165" selection-end-column="18" />
+        <state relative-caret-position="250">
+          <caret line="34" column="29" lean-forward="false" selection-start-line="34" selection-start-column="29" selection-end-line="34" selection-end-column="29" />
           <folding>
-            <element signature="e#0#45#0" expanded="true" />
+            <element signature="e#0#115#0" expanded="true" />
           </folding>
         </state>
       </provider>

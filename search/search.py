@@ -8,7 +8,8 @@ class Search():
             raise TypeError("La requête doit être une chaîne de caractère")
 
         self.request = request
-    
+
+    @staticmethod
     def display_docs(postings, type_of_search):
         """Method that displays the document number of postings list"""
         if len(postings) == 0:

@@ -32,6 +32,7 @@ def search_engine():
             start_time = time.time()
             current_search = SearchBoolean(user_request)
             result_list = current_search.do_search(index)
+            print(type_search)
             Search.display_docs(result_list, type_search)
             print("Results in %s seconds ---" % (time.time() - start_time))
             user_request = input("Recherche ")
