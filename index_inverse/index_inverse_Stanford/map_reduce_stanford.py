@@ -4,6 +4,7 @@ from nltk.stem import WordNetLemmatizer
 import operator
 from threading import Thread, Semaphore, Lock
 import os
+import time
 
 nltk.download('stopwords')
 nltk.download('wordnet')
@@ -12,7 +13,7 @@ wl = WordNetLemmatizer()
 
 class mapReduceStanford:
 
-    lock = Lock()
+    # lock = Lock()
 
     def __init__(self,path):
 
@@ -20,33 +21,44 @@ class mapReduceStanford:
 
     def mapReducer(self):
 
-        global documents
+        global documents #List of documents to be treated
         documents = []
+        # print(documents)
 
-        global buffer
+        global buffer #Buffer of documents that have been mapped but not reduced
         buffer = []
 
-        global docID
+        global docID #Counting global docID
         docID = 1
 
-        global index
+        global index #Final index
         index = {}
 
-        global dico_docID
+        global dico_docID #Final dico for doc,docID
         dico_docID = {}
+
+        global continuer
+        continuer = True
 
         # Create the threads
 
         class CreateListDocuments(Thread):
 
-            for i in range(0, 9):  # Browsing blocks
-                print(i)
-                path_temp = self.path + str(i) + "/"
-                for root, dirs, files in os.walk(path_temp):  # Browsing files
-                    for file in files:
-                        doc = path_temp + file
-                        docname = str(i) + file
-                        documents += [(doc,docname)]
+            def __init__(self,path):
+                Thread.__init__(self)
+                self.path = path
+
+            def run(self):
+                for i in range(0, 9):  # Browsing blocks
+                    print(i)
+                    path_temp = self.path + str(i) + "/"
+                    for root, dirs, files in os.walk(path_temp):  # Browsing files
+                        for file in files:
+                            doc = path_temp + file
+                            docname = str(i) + file
+                            global documents, docID
+                            documents += [(doc,docname,docID)]
+                            docID += 1
 
         class Mapper(Thread):
 
@@ -74,6 +86,17 @@ class mapReduceStanford:
             def lemmatisation(wordList):
                 return list(map(wl.lemmatize, wordList))
 
+            # @staticmethod
+            # def return_docID():
+            #     return docID
+            #
+            # @staticmethod
+            # def increment_docID():
+            #     docID += 1
+
+            # def return_buffer(a):
+            #     buffer += [a]
+
             def run(self):
                 while documents != []:
 
@@ -84,7 +107,8 @@ class mapReduceStanford:
 
                     with open(documents[0][0], 'r') as f:
 
-                        dico_docID[docID] = documents[0][1]
+                        global dico_docID
+                        dico_docID[documents[0][2]] = documents[0][1]
 
                         self.wordList = []
 
@@ -95,14 +119,20 @@ class mapReduceStanford:
                         self.wordList = self.lemmatisation(self.wordList)
 
                         for w in self.wordList:
-                            self.tuple_list += (w, docID)
+                            self.tuple_list += [(w, documents[0][2])]
 
-                        docID += 1
                         del documents[0]
+
+
+                        global buffer
                         buffer += self.tuple_list
+                        # print(len(buffer))
+
 
                     Mapper.lock.release()
                     Mapper.semaphore.release()
+
+
 
         class Reducer(Thread):
 
@@ -114,19 +144,25 @@ class mapReduceStanford:
 
             def run(self):
 
-                while buffer != []:
+                while buffer != [] or continuer:
 
                     Reducer.semaphore.acquire(self)
                     Reducer.lock.acquire()
                     t = buffer[0]
-                    if t(0) not in index.keys():
-                        index[t(0)] = {}
-                        index[t(0)][t(1)] = 1
+                    print(t)
+
+                    global index
+                    if t[0] not in index.keys():
+                        index[t[0]] = {}
+                        index[t[0]][t[1]] = 1
                     else:
-                        if t(1) not in index[t(0)].keys():
-                            index[t(0)][t(1)] = 1
+                        if t[1] not in index[t[0]].keys():
+                            index[t[0]][t[1]] = 1
                         else:
-                            index[t(0)][t(1)] += 1
+                            index[t[0]][t[1]] += 1
+
+                    del buffer[0]
+                    print("yo" + str(len(buffer)))
 
                     Reducer.lock.release()
                     Reducer.semaphore.release()
@@ -134,14 +170,23 @@ class mapReduceStanford:
 
         # Run threads
 
-        self.createDocs = CreateListDocuments()
+        self.createDocs = CreateListDocuments("C:/Users/titou/Desktop/Centrale/Option OSY/RI-W/pa1-data (1)/pa1-data/")
         self.map = Mapper()
         self.red = Reducer()
 
         self.createDocs.start()
+        time.sleep(3)
         self.map.start()
+        time.sleep(3)
         self.red.start()
 
+        #Wait for the mappers to finish
+        self.map.join()
+
+        continuer = False
+
+        #Wait for the reducers to finish
+        self.red.join()
 
         self.dico_docID = dico_docID  # {doc:docID}
         self.dico_index = index  # {term:{docID:freq}}
