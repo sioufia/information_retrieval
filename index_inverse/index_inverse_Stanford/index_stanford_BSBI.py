@@ -72,6 +72,9 @@ class IndexStanfordBSBI:
 
         print("Parsing block " + str(block_number) + " : {} seconds ".format(time.time() - start_time))
         return termid_postings
+
+    def sortingBlock(dic_termid_postings):
+        #Take an index of a block and sort it by termid
      
     def writeBlockToDisk(dic_termid_postings, filename):
         start_time = time.time()
