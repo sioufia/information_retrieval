@@ -1,4 +1,5 @@
 from search.search import Search, SearchVector
+from statistics import mean
 
 class Evaluation():
     """Class that compare the result of one request with the relevant
@@ -55,8 +56,63 @@ class Evaluation():
                 precision = max(temp_dic.values())
             self.rappel_precision_interpolation[round(rappel,1)] = precision
             rappel += 0.1
-        
-            
+
+    @staticmethod
+    def emeasure(recall, precision, beta):
+        """Computes E measure for a precision, rappel and beta"""
+        em = 1 - (beta**2+1)*precision*recall/(beta**2*precision+recall)
+        return em
+
+    @staticmethod
+    def fmeasure(recall, precision, beta):
+        """Computes F measure for a precision, rappel and beta"""
+        fm = (beta**2+1)*precision*recall/(beta**2*precision+recall)
+        return fm
+
+    def rprecision(self,index):
+        """"Computes R precision"""
+        current_search = SearchVector(self.query)
+        result_list = current_search.do_search(index)
+        total_nb_relevant_doc = len(self.sample_test)
+        current_nb_relevant_doc_found = 0
+        for i in range(total_nb_relevant_doc):
+            current_nb_relevant_doc_found += 1
+
+        r = current_nb_relevant_doc_found/float(total_nb_relevant_doc)
+        return r
+
+
+    def average_precision(self,index):
+        current_search = SearchVector(self.query)
+        result_list = current_search.do_search(index)
+        total_nb_relevant_doc = len(self.sample_test)
+        current_recall = 0
+        current_nb_relevant_doc_found = 0
+        current_nb_doc_retrieved = 0
+        result = []
+
+        for doc in result_list:
+            current_nb_doc_retrieved += 1
+            #test if the doc is relevant
+            if int(doc[0]) in self.sample_test:
+                current_nb_relevant_doc_found += 1
+                current_recall = current_nb_relevant_doc_found/float(total_nb_relevant_doc)
+                current_precision = current_nb_relevant_doc_found/float(current_nb_doc_retrieved)
+
+                #Add precision to a list to average later
+                result += [current_precision]
+
+            #No need to go further if recall = 1
+            if current_recall == 1:
+                break
+
+        #Computes the mean of precisions for recall = 0 to 1
+        if current_nb_relevant_doc_found == total_nb_relevant_doc and total_nb_relevant_doc!=0:
+            m = mean(result)
+        else: #if a relevant doc was not found then precision = 0
+            m = 0
+        return m
+
             
 
 

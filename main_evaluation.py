@@ -1,6 +1,7 @@
-from evaluation import Evaluation
+from evaluation.evaluation import Evaluation
 from index_inverse.index_inverse_CACM.construction_index_cacm_class import ConstructionIndex, ConstructionIndexCACM
 import matplotlib.pyplot as plt
+from statistics import mean
 
 def get_doc_relevants_query(query_nb):
     """Method that get the relevant doc for a query from the query set"""
@@ -57,7 +58,7 @@ def calculate_average(D):
 
 
 def main():
-    """Main Method that produces the interpolate curve Precision/Recall from the query set"""
+    """Main Method that produces the interpolate curve Precision/Recall from the query set and the MAP"""
 
     #Creation of the CACM index
     index = ConstructionIndexCACM()
@@ -71,6 +72,7 @@ def main():
     queries = loop_query_test()
 
     L=[]
+    ap_list = []
 
     for query in queries:
         relevant_doc = get_doc_relevants_query(query)
@@ -78,6 +80,11 @@ def main():
         A.precision_for_relevant_doc(index)
         A.interpolate_rappel_precision()
         L.append(A.rappel_precision_interpolation)
+        ap_list += [A.average_precision(index)]
+
+    #Calculate mean average precision
+    map_v = mean(ap_list)
+    print("The mean average precision is {}".format(str(map_v)))
 
     #Calculate the average of each value of recall
     interpolate_general = calculate_average(L)
