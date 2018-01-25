@@ -1,5 +1,7 @@
 import nltk
 from math import *
+from operator import itemgetter
+import matplotlib.pyplot as plt
 
 class ConstructionIndex():
     def __init__(self, collection_dic = {}):
@@ -7,6 +9,11 @@ class ConstructionIndex():
         self.collection_dic = collection_dic 
         self.D_terme_termeid = {}
         self.D_terme_id_postings = {}
+        self.nb_tokens = 0
+
+    def size_voc(self):
+        """Method to return the size of the vocabulary"""
+        return len(self.D_terme_id_postings.keys())
     
     def segmenter(self):
         """Method that tokenizes the content of the attribute 
@@ -54,6 +61,9 @@ class ConstructionIndex():
         for doc in self.collection_dic:
             nb_doc += 1
             for terme in self.collection_dic[doc]:
+                #Counting number tokens
+                self.nb_tokens += 1
+                #Updating index
                 if terme not in self.D_terme_termeid.keys():
                     self.D_terme_termeid[terme] = terme_id
                     self.D_terme_id_postings[terme_id] ={} #No solution found to avoid dictionary for postings if we want to stock the weight of the terms
@@ -106,6 +116,7 @@ class ConstructionIndex():
                 self.D_terme_id_postings[t][d] *= nd[d] # stock the weight normalized
     
     def get_termeid_postings(self, terme):
+        """"Method that returns a list of postings of a term"""
         if not isinstance(terme, str):
             raise TypeError("Le terme cherché doit être sous format chaîne de caractère")
         
@@ -114,6 +125,31 @@ class ConstructionIndex():
 
         else:
             return []
+
+    def rang_freq(self):
+        """"Method that computes the range frequency plot for all tokens in collection"""
+        #Retrieving tokens and frequencies
+        l = []
+        for k,v in self.collection_dic.items():
+            l += [(k,len(v))]
+
+        #Sorting by frequency
+        l = sorted(l, key = itemgetter(1), reverse=True)
+
+        #Constructino freq and range lists
+        rang = []
+        freq = []
+        for i in range(len(l)):
+            rang += [i+1]
+            freq += [l[i][1]]
+
+        print(len(rang))
+        print(len(freq))
+        plt.scatter(rang, freq)
+        plt.title('Range vs Frequency')
+        plt.xlabel('Range')
+        plt.ylabel('Frequency')
+        plt.show()
 
 
 class ConstructionIndexCACM(ConstructionIndex):
@@ -139,6 +175,20 @@ class ConstructionIndexCACM(ConstructionIndex):
                         self.collection_dic[doc_number] = "" 
                 elif doc_section in [".I",".T",".W",".K"]:
                     self.collection_dic[doc_number] += " " + line[:-1]
+
+
+    def half_collection(self):
+        """Method to use half the collection"""
+        self.half_collection_dic = {}
+        n = len(self.collection_dic.keys())
+        i=0
+        for k,v in self.collection_dic.items():
+            if i>n/2:
+                break
+            self.half_collection_dic[k]=v
+            i += 1
+        self.collection_dic = self.half_collection_dic
+
 
     
             

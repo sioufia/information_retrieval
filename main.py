@@ -5,18 +5,26 @@ import time
 
 
 def search_engine():
-    collection = input("Collection: ")
+    collection = input("On which collection do you want to make a query ? (cacm/stanford) : ")
 
     #Generated the index from the collection
     if collection == "cacm":
         start_time = time.time()
         index = ConstructionIndexCACM()
         index.parser("CACM/cacm.all")
+        # half_collection is only used to estimate the size of voc for half the collection
+        # index.half_collection()
         index.segmenter()
         index.traiter_tokens_collection("CACM/common_words")
         nb_doc = index.index_inverse()
         index.weight_calculation_index(nb_doc)
+
+        #To compute range frequency plot
+        index.rang_freq()
+
         print("Index construction : %s seconds " % (time.time() - start_time))
+        print("There are {} tokens in the collection".format(str(index.nb_tokens)))
+        print("There are {} distinct words in the vocabulary".format(str(index.size_voc())))
     elif collection == "stanford":
         start_time = time.time()
         index = IndexStanford()

@@ -44,11 +44,11 @@ class Evaluation():
     
     def interpolate_rappel_precision(self):
         """Interpolate the curve Rappel-Precision"""
-        i = 0
+
         rappel = 0
         temp_dic = self.rappel_precision_relevant_doc
         for i in range(11):
-            temp_dic = {k:v for (k,v) in temp_dic.items() if rappel<k}
+            temp_dic = {k:v for (k,v) in temp_dic.items() if rappel < k}
             #The case where not all relevant documents have been found
             if len(temp_dic) == 0:
                 precision = 0
@@ -60,14 +60,39 @@ class Evaluation():
     @staticmethod
     def emeasure(recall, precision, beta):
         """Computes E measure for a precision, rappel and beta"""
-        em = 1 - (beta**2+1)*precision*recall/(beta**2*precision+recall)
+        print(recall)
+        print(precision)
+        em = 1 - (beta**2+1)*precision*recall/float(beta**2*precision+recall)
         return em
 
     @staticmethod
     def fmeasure(recall, precision, beta):
         """Computes F measure for a precision, rappel and beta"""
-        fm = (beta**2+1)*precision*recall/(beta**2*precision+recall)
+        fm = (beta**2+1)*precision*recall/float(beta**2*precision+recall)
         return fm
+
+    def compute_measures(self, index, k):
+        """"Computes E and F measures for a query with a result list of k documents"""
+        current_search = SearchVector(self.query)
+        result_list = current_search.do_search(index, k)
+        total_nb_relevant_doc = len(self.sample_test)
+        current_nb_relevant_doc_found = 0
+        for doc in result_list:
+            #If the document is relevant
+            if int(doc[0]) in self.sample_test:
+                current_nb_relevant_doc_found += 1
+
+        #Computes global precision and recall for the query
+        print(current_nb_relevant_doc_found)
+        precision = current_nb_relevant_doc_found/float(k)
+        recall = current_nb_relevant_doc_found/float(total_nb_relevant_doc)
+
+        #Computes E measure, F measure
+        em = self.emeasure(recall, precision, 1)
+        fm = self.fmeasure(recall, precision, 1)
+
+        return (em,fm)
+
 
     def rprecision(self,index):
         """"Computes R precision"""
@@ -75,11 +100,17 @@ class Evaluation():
         result_list = current_search.do_search(index)
         total_nb_relevant_doc = len(self.sample_test)
         current_nb_relevant_doc_found = 0
-        for i in range(total_nb_relevant_doc):
-            current_nb_relevant_doc_found += 1
+        i = 0
+        for doc in result_list:
+            i += 1
+            if int(doc[0]) in self.sample_test:
+                current_nb_relevant_doc_found += 1
+            if i == total_nb_relevant_doc:
+                break
 
         r = current_nb_relevant_doc_found/float(total_nb_relevant_doc)
         return r
+
 
 
     def average_precision(self,index):

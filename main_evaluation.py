@@ -71,8 +71,14 @@ def main():
     #Get the queries under the dictionnary format from the file query.text file
     queries = loop_query_test()
 
+    #List for recall precision interpolation
     L=[]
+    #average precision list
     ap_list = []
+    #E F measures list
+    EF_list = []
+    #R precision list
+    R_list = []
 
     for query in queries:
         relevant_doc = get_doc_relevants_query(query)
@@ -80,7 +86,12 @@ def main():
         A.precision_for_relevant_doc(index)
         A.interpolate_rappel_precision()
         L.append(A.rappel_precision_interpolation)
+        #Computing average precision
         ap_list += [A.average_precision(index)]
+        #Computes E, F measures
+        EF_list += [A.compute_measures(index, 50)]
+        #Computes R precision
+        R_list += [A.rprecision(index)]
 
     #Calculate mean average precision
     map_v = mean(ap_list)
@@ -90,16 +101,19 @@ def main():
     interpolate_general = calculate_average(L)
 
     #Make the interpolate curve Rappel-Precision
-    Rappel = list(interpolate_general.keys())
-    Precision = list(interpolate_general.values())
-    plt.scatter(Rappel, Precision)
+    rappels = list(interpolate_general.keys())
+    precisions = list(interpolate_general.values())
+    plt.scatter(rappels, precisions)
     plt.title('Precision/Recall interpolation')
     plt.xlabel('Recall')
     plt.ylabel('Precision')
     plt.show()
     
-    return interpolate_general
-
+    #Print E,F,R measures for the queries
+    for i in range(len(queries)):
+        print("Pour la requête {0}, la E measure vaut {1}, la F measure vaut {2} et la R précision vaut {3}".format(
+            queries[i], EF_list[i][0], EF_list[i][1], R_list[i]
+        ))
 
 main()
                 
