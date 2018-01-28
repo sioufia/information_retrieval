@@ -3,9 +3,9 @@ import time
 from .indexinverse.index_inverse import IndexInverse
 
 class IndexCACMBSBI(IndexInverse):
-    def __init__(self):
+    def __init__(self, collection_dic = {}):
         IndexInverse.__init__(self)
-        self.collection_dic = {}
+        self.collection_dic = collection_dic
     
     def parser(self,filename):
         """Method that takes a file with several documents as entry.
@@ -61,21 +61,30 @@ class IndexCACMBSBI(IndexInverse):
         termid_doc_f =[]
         for doc in self.collection_dic:
             for term in self.collection_dic[doc]:
-                #print(term)
-                if term not in self.term_termid.keys():
-                    self.term_termid[term] = self.current_termid
-                    termid_doc_f.append([self.term_termid[term], self.nb_doc])
+                if term not in self.D_terme_termeid.keys():
+                    self.D_terme_termeid[term] = self.current_termid
+                    termid_doc_f.append([self.D_terme_termeid[term], self.nb_doc])
                     self.current_termid += 1
-                    #print(self.current_termid)
                     
                 else:
-                    termid_doc_f.append([self.term_termid[term], self.nb_doc])
+                    termid_doc_f.append([self.D_terme_termeid[term], self.nb_doc])
 
             self.nb_doc += 1
-        #print(self.term_termid.keys())
 
         print("Parsing block 0 : {} seconds ".format(time.time() - start_time))
         return termid_doc_f
+
+    def half_collection(self):
+        """Method to use half the collection"""
+        self.half_collection_dic = {}
+        n = len(self.collection_dic.keys())
+        i=0
+        for k,v in self.collection_dic.items():
+            if i>n/2:
+                break
+            self.half_collection_dic[k]=v
+            i += 1
+        self.collection_dic = self.half_collection_dic
 
 def constructbsbi_index_CACM():
     index = IndexCACMBSBI()

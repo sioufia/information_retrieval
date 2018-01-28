@@ -8,9 +8,9 @@ class IndexInverse:
 
     def __init__(self):
         self.doc_docid = {}
-        self.term_termid = {}
+        self.D_terme_termeid = {}
         self.current_termid = 0
-        self.nb_doc = 0
+        self.nb_doc = 1
         self.D_terme_id_postings = {}
     
     @staticmethod
@@ -30,18 +30,14 @@ class IndexInverse:
             if current_couple == elt:
                 freq_term_doc +=1
             
-            #Same termid but it's not in the same doc
-            elif current_couple[0] == elt[0]:
-                if current_couple[0] not in termid_postings.keys():
-                    termid_postings[current_couple[0]] = []
-
-                termid_postings[current_couple[0]].append([current_couple[1], freq_term_doc])
-                current_couple = elt
-                freq_term_doc = 1
-            
-            #New termid
             else:
-                termid_postings[current_couple[0]] = [[current_couple[1], freq_term_doc]]
+                #Same termid but it's not in the same doc
+                if current_couple[0] in termid_postings.keys():
+                    termid_postings[current_couple[0]].append([current_couple[1], freq_term_doc])
+                #New termid
+                else:
+                    termid_postings[current_couple[0]] = [[current_couple[1], freq_term_doc]]
+                
                 current_couple = elt
                 freq_term_doc = 1
         
@@ -68,7 +64,7 @@ class IndexInverse:
         """Merge the blocks of an index."""
         start_time = time.time()
         path_file = "/Users/alexandresioufi/Documents/Projets infos/recherche/disk_bsbi/"
-        #read_buffer = list(self.term_termid.values())
+        #read_buffer = list(self.D_terme_termeid.values())
         read_buffer = [i for i in range(0,3000)]
         files = []
         
