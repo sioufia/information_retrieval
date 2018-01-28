@@ -1,4 +1,6 @@
-from IndexInverse import *
+import nltk
+import time
+from .indexinverse.index_inverse import IndexInverse
 
 class IndexCACMBSBI(IndexInverse):
     def __init__(self):
@@ -51,23 +53,38 @@ class IndexCACMBSBI(IndexInverse):
                     collection_without_stopwords[elt].append(token.lower())
         self.collection_dic = collection_without_stopwords
     
-    def parseBlock(self):
+    def parseBlockCacm(self):
         """Function that takes a dictionnary with doc as key and tokens as value.
            It returns a list of tuples (termid, frequency)"""
         #block_number is the number of the block
         start_time = time.time()
         termid_doc_f =[]
         for doc in self.collection_dic:
-            for term in doc:
+            for term in self.collection_dic[doc]:
+                #print(term)
                 if term not in self.term_termid.keys():
                     self.term_termid[term] = self.current_termid
-                    termid_doc_f.append((self.term_termid[term], self.nb_doc))
+                    termid_doc_f.append([self.term_termid[term], self.nb_doc])
                     self.current_termid += 1
+                    #print(self.current_termid)
                     
                 else:
-                    termid_doc_f.append((self.term_termid[term], self.nb_doc))
+                    termid_doc_f.append([self.term_termid[term], self.nb_doc])
 
             self.nb_doc += 1
+        #print(self.term_termid.keys())
 
         print("Parsing block 0 : {} seconds ".format(time.time() - start_time))
         return termid_doc_f
+
+def constructbsbi_index_CACM():
+    index = IndexCACMBSBI()
+    index.parser("CACM/cacm.all")
+    index.tokenizer()
+    index.manage_tokens_collection("CACM/common_words")
+    termid_docid_block = index.parseBlockCacm() #CACM is considered as just one block
+    termid_postings_block = IndexInverse.sortingBlock(termid_docid_block, "0")
+    IndexInverse.writeBlockToDiskJson(termid_postings_block,"/Users/alexandresioufi/Documents/Projets infos/recherche/disk_bsbi/cacm/", "0")
+    index.convertIndexDiskIntoIndexMemory("/Users/alexandresioufi/Documents/Projets infos/recherche/disk_bsbi/cacm/0")
+    index.weight_calculation_index()
+    return index

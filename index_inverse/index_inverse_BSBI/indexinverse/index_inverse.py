@@ -1,11 +1,8 @@
-import nltk
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
-import os
 import time
 from operator import itemgetter
 import ast
 import json
+from math import *
 
 class IndexInverse:
 
@@ -38,28 +35,29 @@ class IndexInverse:
                 if current_couple[0] not in termid_postings.keys():
                     termid_postings[current_couple[0]] = []
 
-                termid_postings[current_couple[0]].append((current_couple[1], freq_term_doc))
+                termid_postings[current_couple[0]].append([current_couple[1], freq_term_doc])
                 current_couple = elt
                 freq_term_doc = 1
             
             #New termid
             else:
+                termid_postings[current_couple[0]] = [[current_couple[1], freq_term_doc]]
                 current_couple = elt
                 freq_term_doc = 1
         
         #Need to handle the last current element
         if current_couple[0] not in termid_postings.keys():
-            termid_postings[current_couple[0]] = [(current_couple[1]), freq_term_doc]
+            termid_postings[current_couple[0]] = [[current_couple[1], freq_term_doc]]
         else:
-            termid_postings[current_couple[0]].append((current_couple[1], freq_term_doc))
+            termid_postings[current_couple[0]].append([current_couple[1], freq_term_doc])
         
         print("Sorting block " + str(block_number) + " : {} seconds ".format(time.time() - start_time))
-        return termid_postings
+        return termid_postings  
 
-    def writeBlockToDiskJson(dic_termid_postings, filename):
+    @staticmethod
+    def writeBlockToDiskJson(dic_termid_postings, main_path, filename):
         start_time = time.time()
-        path_file = "/Users/alexandresioufi/Documents/Projets infos/recherche/disk_bsbi/" + filename
-        with open(path_file, "a") as f:
+        with open(main_path + filename, "a") as f:
             for termid in dic_termid_postings:
                 line = '{"' + str(termid) + '":"' + str(dic_termid_postings[termid]) + '"}' + '\n'
                 f.write(str(line))
@@ -84,17 +82,18 @@ class IndexInverse:
         index_final_file = open(path_file + "final", "a") 
 
         while len(read_buffer) > 1:
-            L= [] #A list of tuples (block, termid, postinglist)
+            L= [] #A list of tuples (termid, postinglist)
             for block in range(0,9):
                 if block not in buffer_termid or buffer_termid[block][0] < read_buffer[0]:
                     line = files[block].readline()
                     buffer_termid[block] = IndexInverse.convertPostingsFromStringToList(line) #Stock the tuple (termid, postinglist)
                 
                 if buffer_termid[block][0] == read_buffer[0]:
-                    L.append(buffer_termid[block][1])
+                    L += buffer_termid[block][1]
+
             
-            if len(L) != 0:
-                line = '{"' + str(read_buffer[0]) + '":"' + str(IndexInverse.mergePostingLists(L)) + '"}' + '\n'
+            if L:
+                line = '{"' + str(read_buffer[0]) + '":"' + str(L) + '"}' + '\n'
                 index_final_file.write(line)
 
             del read_buffer[0] # Removing the termid for which the posting list was merged
@@ -107,29 +106,6 @@ class IndexInverse:
         termid_key = int(list(json.loads(line.replace("\n","")).keys())[0])
         postings_list = ast.literal_eval(json.loads(line.replace("\n",""))[str(termid_key)])
         return (termid_key, postings_list)
-    
-    @staticmethod
-    def mergePostingLists(postings_lists):
-        """Takes a list of posting_list and merge and sort it into one posting_list"""
-        start_time = time.time()
-        #list of postings_list that are sorted by doc_id
-        if len(postings_lists) == 1:
-            return postings_lists
-        else:
-            set_postings_list = []
-            for postings in postings_lists:
-                set_postings_list.append(set(postings))
-            del postings_lists #Save memory
-    
-            mergeLists = set_postings_list[0]
-            i = 1
-            while i < len(set_postings_list):
-                mergeLists = mergeLists.union(set_postings_list[i])
-                i += 1
-            mergeLists = list(mergeLists)
-            mergeLists.sort(key=itemgetter(0,1))
-        
-            return mergeLists
     
     def weight_calculation_index(self):
         "Method that calculates the weight of each term in each doc of the inverse doc."
@@ -168,27 +144,19 @@ class IndexInverse:
             for d in self.D_terme_id_postings[t]:
                 d[1] *= nd[d[0]] # stock the weight normalized
     
-    def convertIndexDiskIntoIndexMemory(self):
+    def convertIndexDiskIntoIndexMemory(self, filename):
         """Method that gets the index from disk and associate it to the index_inverse in memory"""
-        path = "/Users/alexandresioufi/Documents/Projets infos/recherche/disk_bsbi/"
-        with open(path + "final", 'r') as f:
+        with open(filename, 'r') as f:
             lines = f.readlines()
             for line in lines:
                 termid, postings = IndexInverse.convertPostingsFromStringToList(line)
                 self.D_terme_id_postings[termid] = postings
     
 
-def main(collection_path):
-    index = IndexInverse()
-    for i in range(0, 9):  # Browsing blocks    
-        print(i)
-        termid_docid_block = index.parseBlock(collection_path, i)
-        termid_postings_block = IndexInverse.sortingBlock(termid_docid_block, str(i))
-        IndexInverse.writeBlockToDiskJson(termid_postings_block, str(i))
-        del termid_postings_block, termid_docid_block
-    index.mergeBlock()
-    index.convertIndexDiskIntoIndexMemory()
-    index.weight_calculation_index()
+
+
+
+    
         
 
                 

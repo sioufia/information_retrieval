@@ -1,4 +1,10 @@
-from IndexInverse import *
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+import os
+import time
+
+from .indexinverse.index_inverse import IndexInverse
 
 class IndexStanfordBSBI(IndexInverse):
     def __init__(self):
@@ -26,7 +32,7 @@ class IndexStanfordBSBI(IndexInverse):
             wordList = self.lemmatisation(wordList)
         return wordList
      
-    def parseBlock(self, collection_path, block_number):
+    def parseBlockStanford(self, collection_path, block_number):
         """Function that takes a list of docs with tokens and returns a list of tuples (termid, frequency)"""
         #block_number is the number of the block
         start_time = time.time()
@@ -41,13 +47,26 @@ class IndexStanfordBSBI(IndexInverse):
                 for term in wordDoc:
                     if term not in self.term_termid.keys():
                         self.term_termid[term] = self.current_termid
-                        termid_doc_f.append((self.term_termid[term], self.nb_doc))
+                        termid_doc_f.append([self.term_termid[term], self.nb_doc])
                         self.current_termid += 1
                         
                     else:
-                        termid_doc_f.append((self.term_termid[term], self.nb_doc))
+                        termid_doc_f.append([self.term_termid[term], self.nb_doc])
 
                 self.nb_doc += 1
 
         print("Parsing block " + str(block_number) + " : {} seconds ".format(time.time() - start_time))
         return termid_doc_f
+
+def constructbsbi_index_Stanford(collection_path):
+    index = IndexStanfordBSBI()
+    for i in range(0, 9):  # Browsing blocks    
+        print(i)
+        termid_docid_block = index.parseBlockStanford(collection_path, i)
+        termid_postings_block = IndexInverse.sortingBlock(termid_docid_block, str(i))
+        IndexInverse.writeBlockToDiskJson(termid_postings_block, "/Users/alexandresioufi/Documents/Projets infos/recherche/disk_bsbi/stanford/", str(i))
+        del termid_postings_block, termid_docid_block
+    index.mergeBlock()
+    index.convertIndexDiskIntoIndexMemory("/Users/alexandresioufi/Documents/Projets infos/recherche/disk_bsbi/stanford/final")
+    index.weight_calculation_index()
+    return index
