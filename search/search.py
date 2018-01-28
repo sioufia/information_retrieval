@@ -1,4 +1,5 @@
 from index_inverse.index_inverse_CACM.construction_index_cacm_class import ConstructionIndex
+from index_inverse.index_inverse_BSBI.index_cacm_bsbi import IndexCACMBSBI
 
 import operator
 
@@ -89,11 +90,12 @@ class SearchVector(Search):
         self.request = {'q': self.request}
 
     def construct_index_search(self):
-        index_inverse_search = ConstructionIndex(collection_dic = self.request)
-        index_inverse_search.segmenter()
-        index_inverse_search.traiter_tokens_collection("CACM/common_words")
-        nb_doc = index_inverse_search.index_inverse()
-        index_inverse_search.weight_calculation_index(nb_doc)
+        index_inverse_search = IndexCACMBSBI(collection_dic = self.request)
+        index_inverse_search.tokenizer()
+        index_inverse_search.manage_tokens_collection("CACM/common_words")
+        termid_doc_f = index_inverse_search.parseBlockCacm()
+        index_inverse_search.D_terme_id_postings = index_inverse_search.sortingBlock(termid_doc_f, "0")
+        index_inverse_search.weight_calculation_index()
         return index_inverse_search
 
     def do_search(self, index_collection, k="no_limit"):
@@ -104,19 +106,16 @@ class SearchVector(Search):
         #Generate the index of the search request
         index_inverse_search = self.construct_index_search()
 
-        index_term_termid = index_collection.D_terme_termeid
-        index_termid_postings = index_collection.D_terme_id_postings
-
         for term_request in index_inverse_search.D_terme_termeid:
             #get the postings of the term_request in the index
             
-            postings = index_collection.get_termeid_postings(term_request)
+            postings = Search.get_termeid_postings(index_collection, term_request) #postings = [[1,0.33], [3,0.44], ...]
             if len(postings) > 0:
                 for doc in postings:
-                    if doc in sj:
-                        sj[doc] += postings[doc] * index_inverse_search.D_terme_id_postings[index_inverse_search.D_terme_termeid[term_request]]['q']
+                    if doc[0] in sj:
+                        sj[doc[0]] += doc[1] * index_inverse_search.D_terme_id_postings[index_inverse_search.D_terme_termeid[term_request]][0][1]
                     else:
-                        sj[doc] = postings[doc] * index_inverse_search.D_terme_id_postings[index_inverse_search.D_terme_termeid[term_request]]['q']
+                        sj[doc[0]] = doc[1] * index_inverse_search.D_terme_id_postings[index_inverse_search.D_terme_termeid[term_request]][0][1]
         
         sorted_sj = sorted(sj.items(), key=operator.itemgetter(1), reverse=True)
         if k == "no_limit":

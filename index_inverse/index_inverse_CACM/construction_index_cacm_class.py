@@ -11,9 +11,9 @@ class ConstructionIndex():
         self.D_terme_id_postings = {}
         self.nb_tokens = 0
 
-    def size_voc(self):
-        """Method to return the size of the vocabulary"""
-        return len(self.D_terme_id_postings.keys())
+    #def size_voc(self):
+        #"""Method to return the size of the vocabulary"""
+        #return len(self.D_terme_id_postings.keys())
     
     def segmenter(self):
         """Method that tokenizes the content of the attribute 

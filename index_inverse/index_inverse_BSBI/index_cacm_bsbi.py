@@ -3,9 +3,9 @@ import time
 from .indexinverse.index_inverse import IndexInverse
 
 class IndexCACMBSBI(IndexInverse):
-    def __init__(self):
+    def __init__(self, collection_dic = {}):
         IndexInverse.__init__(self)
-        self.collection_dic = {}
+        self.collection_dic = collection_dic
     
     def parser(self,filename):
         """Method that takes a file with several documents as entry.
