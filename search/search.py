@@ -24,20 +24,33 @@ class Search():
             for doc in postings:
                 print("Result {0} : Document {1} ".format(i, doc))
                 i += 1
+    
+    @staticmethod
+    def get_termeid_postings(index, terme):
+        """"Method that returns a list of postings of a term"""
+        if not isinstance(terme, str):
+            raise TypeError("Le terme cherché doit être sous format chaîne de caractère")
+        
+        if terme in index.D_terme_termeid:
+            return index.D_terme_id_postings[index.D_terme_termeid[terme]]
+
+        else:
+            return []
 
 class SearchBoolean(Search):
     def __init__(self, request):
         Search.__init__(self, request)
         self.request = request.split()
     
+    @staticmethod
     def operator_action(postings1, operator, postings2):
         if isinstance(postings1, dict):
-            set_postings1 = set(list(postings1.keys()))
+            set_postings1 = set(postings1) #posting is under the format [[docid, weight], [.,.], ...]
         elif isinstance(postings1, list):
             set_postings1 = set(postings1)
-        
+            
         if isinstance(postings2, dict):
-            set_postings2 = set(list(postings2.keys()))
+            set_postings2 = set(postings2)
         elif isinstance(postings2, list):
             set_postings2 = set(postings2)
 
@@ -53,19 +66,19 @@ class SearchBoolean(Search):
     def do_search(self, index):
         """Method that that takes an index and a search object and return the fusion of the different postings"""
         allowed_operators = ['AND', 'OR', 'NOT']
-        current_fusion = index.get_termeid_postings(self.request[0])
+        current_fusion = [tu[0] for tu in Search.get_termeid_postings(index, self.request[0])]
         i = 1
         while i < len(self.request):
             if self.request[i] in allowed_operators:
                 try:
-                    current_fusion = SearchBoolean.operator_action(current_fusion, self.request[i], index.get_termeid_postings(self.request[i+1]))
+                    current_fusion = SearchBoolean.operator_action(current_fusion, self.request[i], [tu[0] for tu in Search.get_termeid_postings(index, self.request[i+1])])
                     i += 2
                 except IndexError:
                     #Case where the request is finished by an operator
                     return current_fusion
             else:
                 #case where 2 strings are not seperated by an operator. It is considered as AND
-                current_fusion = SearchBoolean.operator_action(current_fusion, 'AND', index.get_termeid_postings(self.request[i]))
+                current_fusion = SearchBoolean.operator_action(current_fusion, 'AND', [tu[0] for tu in Search.get_termeid_postings(index, self.request[i])])
                 i += 1
         
         return current_fusion

@@ -114,17 +114,6 @@ class ConstructionIndex():
         for t in self.D_terme_id_postings:
             for d in self.D_terme_id_postings[t]:
                 self.D_terme_id_postings[t][d] *= nd[d] # stock the weight normalized
-    
-    def get_termeid_postings(self, terme):
-        """"Method that returns a list of postings of a term"""
-        if not isinstance(terme, str):
-            raise TypeError("Le terme cherché doit être sous format chaîne de caractère")
-        
-        if terme in self.D_terme_termeid:
-            return (self.D_terme_id_postings[self.D_terme_termeid[terme]])
-
-        else:
-            return []
 
     def rang_freq(self):
         """"Method that computes the range frequency plot for all tokens in collection"""

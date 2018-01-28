@@ -3,8 +3,6 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import os
 
-
-
 class IndexStanford:
     def __init__(self):
         # Dictionnaries to build

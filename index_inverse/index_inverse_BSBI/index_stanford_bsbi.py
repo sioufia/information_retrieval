@@ -45,13 +45,13 @@ class IndexStanfordBSBI(IndexInverse):
                 path_file = path_temp + file
                 wordDoc = self.parseDoc(path_file)
                 for term in wordDoc:
-                    if term not in self.term_termid.keys():
-                        self.term_termid[term] = self.current_termid
-                        termid_doc_f.append([self.term_termid[term], self.nb_doc])
+                    if term not in self.D_terme_termeid.keys():
+                        self.D_terme_termeid[term] = self.current_termid
+                        termid_doc_f.append([self.D_terme_termeid[term], self.nb_doc])
                         self.current_termid += 1
                         
                     else:
-                        termid_doc_f.append([self.term_termid[term], self.nb_doc])
+                        termid_doc_f.append([self.D_terme_termeid[term], self.nb_doc])
 
                 self.nb_doc += 1
 
