@@ -60,10 +60,9 @@ class IndexInverse:
 
         print("Writing block to disk JSON " + filename + " : {} seconds ".format(time.time() - start_time))
 
-    def mergeBlock(self):
+    def mergeBlock(self, path_file):
         """Merge the blocks of an index."""
         start_time = time.time()
-        path_file = "/Users/alexandresioufi/Documents/Projets infos/recherche/disk_bsbi/"
         #read_buffer = list(self.D_terme_termeid.values())
         read_buffer = [i for i in range(0,3000)]
         files = []

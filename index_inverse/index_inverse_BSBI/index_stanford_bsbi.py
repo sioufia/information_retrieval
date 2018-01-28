@@ -64,9 +64,9 @@ def constructbsbi_index_Stanford(collection_path):
         print(i)
         termid_docid_block = index.parseBlockStanford(collection_path, i)
         termid_postings_block = IndexInverse.sortingBlock(termid_docid_block, str(i))
-        IndexInverse.writeBlockToDiskJson(termid_postings_block, "/Users/alexandresioufi/Documents/Projets infos/recherche/disk_bsbi/stanford/", str(i))
+        IndexInverse.writeBlockToDiskJson(termid_postings_block, collection_path, str(i))
         del termid_postings_block, termid_docid_block
-    index.mergeBlock()
-    index.convertIndexDiskIntoIndexMemory("/Users/alexandresioufi/Documents/Projets infos/recherche/disk_bsbi/stanford/final")
+    index.mergeBlock(collection_path + "index_final_stanford")
+    index.convertIndexDiskIntoIndexMemory(collection_path + "index_final_stanford")
     index.weight_calculation_index()
     return index

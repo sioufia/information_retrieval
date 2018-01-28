@@ -86,14 +86,14 @@ class IndexCACMBSBI(IndexInverse):
             i += 1
         self.collection_dic = self.half_collection_dic
 
-def constructbsbi_index_CACM():
+def constructbsbi_index_CACM(index_folder):
     index = IndexCACMBSBI()
     index.parser("CACM/cacm.all")
     index.tokenizer()
     index.manage_tokens_collection("CACM/common_words")
     termid_docid_block = index.parseBlockCacm() #CACM is considered as just one block
     termid_postings_block = IndexInverse.sortingBlock(termid_docid_block, "0")
-    IndexInverse.writeBlockToDiskJson(termid_postings_block,"/Users/alexandresioufi/Documents/Projets infos/recherche/disk_bsbi/cacm/", "0")
-    index.convertIndexDiskIntoIndexMemory("/Users/alexandresioufi/Documents/Projets infos/recherche/disk_bsbi/cacm/0")
+    IndexInverse.writeBlockToDiskJson(termid_postings_block, index_folder, "index_cacm")
+    index.convertIndexDiskIntoIndexMemory(index_folder + "index_cacm")
     index.weight_calculation_index()
     return index
