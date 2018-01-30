@@ -4,6 +4,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import os
+import time
 
 class IndexMemoryStanford(IndexInverseCommon):
     def __init__(self):
@@ -72,10 +73,17 @@ class IndexMemoryStanford(IndexInverseCommon):
         self.D_terme_id_postings = {a:[[b,temp_index[a][b]]for b in temp_index[a].keys()] for a in temp_index.keys()} 
 
 def constructmemory_index_Stanford(path):
+    start_time = time.time()
     index = IndexMemoryStanford()
     index.indexConstruction(path)
     index.weight_calculation_index()
+    print("InMemory construction for Stanford index : %s seconds ---" % (time.time() - start_time))
     return index
+
+if __name__ == "__main__":
+    collection_path = input("What is the path of the Stanford collection ? ") 
+    index = constructmemory_index_Stanford(collection_path)
+    print(index)
 
 
 

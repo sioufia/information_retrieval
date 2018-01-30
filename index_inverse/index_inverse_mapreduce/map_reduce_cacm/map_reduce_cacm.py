@@ -176,12 +176,20 @@ class MapReduceCACM(IndexInverseCommon):
 
         self.D_terme_termeid = term_termid
 
-def constructmapred_index_CACM():
+def constructmapred_index_CACM(collection_path, stopwords_path):
+    start_time = time.time()
     a = MapReduceCACM()
-    a.parser("/Users/alexandresioufi/Documents/Projets infos/recherche/riproject/CACM/cacm.all")
+    a.parser(collection_path)
     a.segmenter()
-    a.traiter_tokens_collection("/Users/alexandresioufi/Documents/Projets infos/recherche/riproject/CACM/common_words")
+    a.traiter_tokens_collection(stopwords_path)
     a.mapreducer()
     a.weight_calculation_index()
+    print("MapReduce construction for CACM index : %s seconds ---" % (time.time() - start_time))
     return a
+
+if __name__ == "__main__":
+    collection_path = input("What is the path of the CACM collection ? ")
+    stopwords_path = input("What is the path of the Stopwords for CACM collection ? ")
+    index = constructmapred_index_CACM(collection_path, stopwords_path)
+    print(index)
 

@@ -191,10 +191,17 @@ class mapReduceStanford:
         self.dico_index = index  # {term:{docID:freq}}
 
 
+def constructmapred_index_Stanford(collection_path):
+    start_time = time.time()
+    a = mapReduceStanford(collection_path)
+    a.mapReducer()
+    print("MapReduce construction for Stanford index : %s seconds ---" % (time.time() - start_time))
+    return a
 
-mapReduce = mapReduceStanford("/Users/alexandresioufi/Documents/Projets infos/recherche/pa1-data/")
-mapReduce.mapReducer()
-print(mapReduce.dico_index)
+if __name__ == "__main__":
+    collection_path = input("What is the path of the Stanford collection ? ") 
+    index = constructmapred_index_Stanford(collection_path)
+    print(index)
 
 
 

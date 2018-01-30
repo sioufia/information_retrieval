@@ -2,6 +2,7 @@ import nltk
 from math import *
 from operator import itemgetter
 import matplotlib.pyplot as plt
+import time
 
 from ...index_inverse_common.index_inverse_common import IndexInverseCommon
 
@@ -139,14 +140,22 @@ class IndexCACMMemory(IndexInverseCommon):
         self.collection_dic = self.half_collection_dic
 
     
-def constructmemory_index_CACM():
+def constructmemory_index_CACM(collection_path, stopwords_path):
+    start_time = time.time()
     index = IndexCACMMemory()
-    index.parser("CACM/cacm.all")
+    index.parser(collection_path)
     index.tokenizer()
-    index.manage_tokens_collection("CACM/common_words")
+    index.manage_tokens_collection(stopwords_path)
     index.index_inverse()
     index.weight_calculation_index()
+    print("InMemory construction for CACM index : %s seconds ---" % (time.time() - start_time))
     return index
+
+if __name__ == "__main__":
+    collection_path = input("What is the path of the CACM collection ? ")
+    stopwords_path = input("What is the path of the Stopwords for CACM collection ? ")
+    index = constructmemory_index_CACM(collection_path, stopwords_path)
+    print(index)
     
 
 

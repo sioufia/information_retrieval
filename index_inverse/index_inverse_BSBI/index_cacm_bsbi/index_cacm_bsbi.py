@@ -87,14 +87,21 @@ class IndexCACMBSBI(IndexInverse):
             i += 1
         self.collection_dic = self.half_collection_dic
 
-def constructbsbi_index_CACM(index_folder):
+def constructbsbi_index_CACM(collection_path, stopwords_path, index_folder):
     index = IndexCACMBSBI()
-    index.parser("CACM/cacm.all")
+    index.parser(collection_path)
     index.tokenizer()
-    index.manage_tokens_collection("CACM/common_words")
+    index.manage_tokens_collection(stopwords_path)
     termid_docid_block = index.parseBlockCacm() #CACM is considered as just one block
     termid_postings_block = IndexInverse.sortingBlock(termid_docid_block, "0")
     IndexInverse.writeBlockToDiskJson(termid_postings_block, index_folder, "index_cacm")
     index.convertIndexDiskIntoIndexMemory(index_folder + "index_cacm")
     index.weight_calculation_index()
     return index
+
+if __name__ == "__main__":
+    index_folder = input("In which folder do you want to create your CACM index ? ")
+    collection_path = input("What is the path of the CACM collection ? ")
+    stopwords_path = input("What is the path of the Stopwords for CACM collection ? ") 
+    index = constructbsbi_index_CACM(collection_path, stopwords_path, index_folder)
+    print(index)
