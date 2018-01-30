@@ -15,7 +15,7 @@ def search_engine():
         type_of_index_building = input("Which type of building do you want to use to make your index ? (bsbi/mapreduce/memory) : ")
         collection_path = input("What is the path of the CACM collection ? ")
         stopwords_path = input("What is the path of the Stopwords for CACM collection ? ")
-        
+
         if type_of_index_building == "bsbi":
             index_folder = input("In which folder do you want to create CACM index ? : ")
             index = constructbsbi_index_CACM(collection_path, stopwords_path, index_folder)
@@ -60,8 +60,8 @@ def search_engine():
             Search.display_docs(result_list, type_search)
             print("Results in %s seconds ---" % (time.time() - start_time))
         
-        type_search = input("boolean or vector ")
-        user_request = input("Recherche ")
+        type_search = input("Type of search ? (boolean/vector) : ")
+        user_request = input("Search : ")
 
 
 if __name__ == "__main__":
