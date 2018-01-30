@@ -1,5 +1,5 @@
-from index_inverse.index_inverse_CACM.construction_index_cacm_class import ConstructionIndex
-from index_inverse.index_inverse_BSBI.index_cacm_bsbi import IndexCACMBSBI
+#from index_inverse.index_inverse_CACM.construction_index_cacm_class import ConstructionIndex
+from index_inverse.index_inverse_BSBI.index_cacm_bsbi.index_cacm_bsbi import IndexCACMBSBI
 
 import operator
 

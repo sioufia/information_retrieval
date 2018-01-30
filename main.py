@@ -1,17 +1,18 @@
-from index_inverse.index_inverse_CACM.construction_index_cacm_class import ConstructionIndex, ConstructionIndexCACM
-from index_inverse.index_inverse_Stanford.index_stanford import IndexStanford
+#from index_inverse.index_inverse_CACM.construction_index_cacm_class import ConstructionIndex, ConstructionIndexCACM
+#from index_inverse.index_inverse_Stanford.index_stanford import IndexStanford
+import time
+from index_inverse.index_inverse_BSBI.index_cacm_bsbi.index_cacm_bsbi import constructbsbi_index_CACM
+from index_inverse.index_inverse_BSBI.index_stanford_bsbi.index_stanford_bsbi import constructbsbi_index_Stanford
+from index_inverse.index_inverse_BSBI.index_inverse.index_inverse import IndexInverse
 
-from index_inverse.index_inverse_BSBI.index_cacm_bsbi import constructbsbi_index_CACM
-from index_inverse.index_inverse_BSBI.index_stanford_bsbi import constructbsbi_index_Stanford
-from index_inverse.index_inverse_BSBI.indexinverse.index_inverse import IndexInverse
+from index_inverse.index_inverse_mapreduce.map_reduce_cacm.map_reduce_cacm import constructmapred_index_CACM
 
 from search.search import Search, SearchBoolean, SearchVector
-import time
 
 
 def search_engine():
     collection = input("On which collection do you want to make a query ? (cacm/stanford) : ")
-    type_of_index_building = input("Which type of building do you want to make your index ? (bsbi/mapreduce) : ")
+    type_of_index_building = input("Which type of building do you want to use to make your index ? (bsbi/mapreduce) : ")
 
     if type_of_index_building == "bsbi":
         #Generated the index from the collection
@@ -32,7 +33,7 @@ def search_engine():
     
     elif type_of_index_building == "mapreduce":
         if collection == "cacm":
-            pass
+            index = constructmapred_index_CACM()
         elif collection == "stanford":
             pass
 
