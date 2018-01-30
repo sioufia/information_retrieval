@@ -1,14 +1,16 @@
+from ...index_inverse_common.index_inverse_common import IndexInverseCommon
+
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import os
 
-class IndexStanford:
+class IndexMemoryStanford(IndexInverseCommon):
     def __init__(self):
         # Dictionnaries to build
-        self.D_terme_termeid = {}  # {term:termID}
+        IndexInverseCommon.__init__(self)
         self.dico_docID = {}  # {doc:docID}
-        self.D_terme_id_postings = {}  # {termID:docID postings}
+        self.nb_doc = 0
 
         nltk.download('stopwords')
         nltk.download('wordnet')
@@ -28,8 +30,8 @@ class IndexStanford:
         return list(map(self.wl.lemmatize, wordList))
 
     def indexConstruction(self,path): #Construction of the index
-        self.docID = 0
         self.termID = 0
+        temp_index = {}
 
         for i in range(0, 9):  # Browsing blocks
             print(i)
@@ -37,7 +39,7 @@ class IndexStanford:
             for root, dirs, files in os.walk(path_temp):
                 for file in files:
                     filename = str(i) + file
-                    self.dico_docID[self.docID] = filename
+                    self.dico_docID[self.nb_doc] = filename
 
                     with open(path_temp + file, 'r') as f:
 
@@ -52,25 +54,28 @@ class IndexStanford:
                         for w in self.wordList:
                             if not w in self.D_terme_termeid.keys(): #Checking if the term already exists in the dictionnary
                                 self.D_terme_termeid[w] = self.termID
-                                self.D_terme_id_postings[self.termID] = [self.docID]
+                                temp_index[self.termID] = {}
+                                temp_index[self.termID][self.nb_doc] = 1
                                 self.termID += 1
+                            
+                            #If the term_id already exists but this posting doc not
+                            elif self.nb_doc not in temp_index[self.D_terme_termeid[w]].keys():
+                                temp_index[self.D_terme_termeid[w]][self.nb_doc] = 1
+                            
+                            #If the posting for this term_id already exists
                             else:
-                                self.D_terme_id_postings[self.D_terme_termeid[w]] += [self.docID]
+                                temp_index[self.D_terme_termeid[w]][self.nb_doc] += 1
 
-                    self.docID += 1
+                    self.nb_doc += 1
+        
+        #index is under the format {termid:{docID:freq}} --> We format it to the format {termid:[[docid:freq]]} to fit the search method 
+        self.D_terme_id_postings = {a:[[b,temp_index[a][b]]for b in temp_index[a].keys()] for a in temp_index.keys()} 
 
-    def get_termeid_postings(self, terme):
-        if not isinstance(terme, str):
-            raise TypeError("Le terme cherché doit être sous format chaîne de caractère")
+def constructmemory_index_Stanford(path):
+    index = IndexMemoryStanford()
+    index.indexConstruction(path)
+    index.weight_calculation_index()
+    return index
 
-        if terme in self.D_terme_termeid:
-            return (self.D_terme_id_postings[self.D_terme_termeid[terme]])
-
-        else:
-            return []
-
-
-# index = IndexStanford()
-# index.indexConstruction("C:/Users/titou/Desktop/Centrale/Option OSY/RI-W/pa1-data/")
 
 
