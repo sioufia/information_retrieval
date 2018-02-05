@@ -70,3 +70,8 @@ def constructbsbi_index_Stanford(collection_path):
     index.convertIndexDiskIntoIndexMemory(collection_path + "index_final_stanford")
     index.weight_calculation_index()
     return index
+
+if __name__ == "__main__":
+    collection_path = input("What is the path of the Stanford collection ? ") 
+    index = constructbsbi_index_Stanford(collection_path)
+    print(index)

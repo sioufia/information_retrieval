@@ -1,7 +1,7 @@
-#from index_inverse.index_inverse_CACM.construction_index_cacm_class import ConstructionIndex
-from index_inverse.index_inverse_BSBI.index_cacm_bsbi.index_cacm_bsbi import IndexCACMBSBI
-
 import operator
+
+import index_inverse.index_inverse_memory.index_inverse_memory_cacm.index_inverse_memory_cacm as icacm
+
 
 class Search():
     def __init__(self, request):
@@ -90,11 +90,10 @@ class SearchVector(Search):
         self.request = {'q': self.request}
 
     def construct_index_search(self):
-        index_inverse_search = IndexCACMBSBI(collection_dic = self.request)
-        index_inverse_search.tokenizer()
-        index_inverse_search.manage_tokens_collection("CACM/common_words")
-        termid_doc_f = index_inverse_search.parseBlockCacm()
-        index_inverse_search.D_terme_id_postings = index_inverse_search.sortingBlock(termid_doc_f, "0")
+        index_inverse_search = icacm.IndexCACMMemory(collection_dic = self.request)
+        index_inverse_search.tokenizerCacm()
+        index_inverse_search.manage_tokens_collectionCacm("CACM/common_words")
+        index_inverse_search.index_inverse()
         index_inverse_search.weight_calculation_index()
         return index_inverse_search
 

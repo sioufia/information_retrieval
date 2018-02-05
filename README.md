@@ -1,20 +1,51 @@
-# riproject
+                                        Information Retrieval Project @CentraleSupélec@3rdYear
 
-Structure of this project : 
+DESCRIPTION:
+This project enables a user to make a query to 2 different collections: cacm and stanford.
 
-Folder index_inverse:
--Subfolder index_inverse_CACM : it contains 1 file --> It's a class for the construction of the CACM index and for the construction of the index of a query
+It is divided into 3 main parts:
+    1/ Construction of the index with 3 different methods (folder: index_inverse) :
+        - In Memory method (folder: index_inverse/index_inverse_memory)
+        - BSBI method (folder: index_inverse/index_inverse_BSBI)
+        - MapReduce method (folder: index_inverse/index_inverse_mapreduce)
+    
+    2/ Modelisation of 2 different type of searches (folder: search) :
+        - Boolean search 
+        - Vectorial search
+    
+    3/ Evaluation of the query for the collection CACM (folder: evaluation ; file: main_evaluation) :
+        - Curve recall/precision
+        - @TITOU
 
--Subfolder index_inverse_Stanford
-To be filled
+STEPS TO FOLLOW TO:
 
-Folder search:
--File search : it's class for the query. There are one parent class Search and 2 classes that inherits from Search : SearchBoolean and SearchVector.
+    Use the search engine: 
+    1/ Go to the folder riproject via your terminal : cd riproject
+    2/ Launch the file main.py via your terminal : python main.py
+    3/ Follow the steps indicated via your terminal
 
-Folder evaluation:
+        Note for the search engine:
+        Only the in memory index construction is used for the STANFORD collection (it took to much time for BSBI and
+        MapReduce).
+    
+    Construct the index via different methods:
+    1st Method - BSBI:
+        For CAM
+        1/ Go to the folder riproject via your terminal : cd riproject
+        2/ Run the foolowing command via your terminal : python -m index_inverse.index_inverse_BSBI.index_cacm_bsbi.index_cacm_bsbi
+        For Stanford (run the same command but change the name) --> It currently takes too much time (around 20 hours)
 
-File main:
-To run this file : python main.py --> The user will be able to make query. 
+    2nd Method - MapReduce:
+        For CAM
+        1/ Go to the folder riproject via your terminal : cd riproject
+        2/ Run the foolowing command via your terminal : python -m index_inverse.index_inverse_mapreduce.map_reduce_cacm.map_reduce_cacm
+        For Stanford (run the same command but change the name) --> It currently takes too much time.
 
-Requirements:
-bitarray
+    3rd Method - In memory:
+        For CAM
+        1/ Go to the folder riproject via your terminal : cd riproject
+        2/ Run the foolowing command via your terminal : python -m index_inverse.index_inverse_memory.index_inverse_memory_cacm.index_inverse_memory_cacm
+        For Stanford (run the same command but change the name)
+    
+    Use the CACM evaluation:
+        @TITOU
