@@ -1,5 +1,5 @@
 from evaluation.evaluation import Evaluation
-from index_inverse.index_inverse_CACM.construction_index_cacm_class import ConstructionIndex, ConstructionIndexCACM
+from index_inverse.index_inverse_memory.index_inverse_memory_cacm.index_inverse_memory_cacm import IndexCACMMemory
 import matplotlib.pyplot as plt
 from statistics import mean
 
@@ -57,16 +57,17 @@ def calculate_average(D):
 
 
 
-def main():
+def main(collection_path, stopwords_path):
     """Main Method that produces the interpolate curve Precision/Recall from the query set and the MAP"""
 
     #Creation of the CACM index
-    index = ConstructionIndexCACM()
-    index.parser("CACM/cacm.all")
-    index.segmenter()
-    index.traiter_tokens_collection("CACM/common_words")
-    nb_doc = index.index_inverse()
-    index.weight_calculation_index(nb_doc)
+    index = IndexCACMMemory()
+    index.parserCacm("CACM/cacm.all")
+    index.parserCacm(collection_path)
+    index.tokenizerCacm()
+    index.manage_tokens_collectionCacm(stopwords_path)
+    index.index_inverse()
+    index.weight_calculation_index()
 
     #Get the queries under the dictionnary format from the file query.text file
     queries = loop_query_test()
@@ -89,7 +90,7 @@ def main():
         #Computing average precision
         ap_list += [A.average_precision(index)]
         #Computes E, F measures
-        EF_list += [A.compute_measures(index, 50)]
+        EF_list += [A.compute_measures(index, 20)]
         #Computes R precision
         R_list += [A.rprecision(index)]
 
@@ -111,11 +112,21 @@ def main():
     
     #Print E,F,R measures for the queries
     for i in range(len(queries)):
-        print("Pour la requête {0}, la E measure vaut {1}, la F measure vaut {2} et la R précision vaut {3}".format(
-            queries[i], EF_list[i][0], EF_list[i][1], R_list[i]
-        ))
+        if EF_list[i][0] == None:
+            print("Pour la requete {}: \n"
+                  "Elle ne comporte pas de documents pertinents et nous ne pouvons donc calculer les statistiques\n".format(
+                str(queries[i+1])
+            ))
+        else:
+            print(
+                "Pour la requête {0}:\n la E measure vaut {1}, la F measure vaut {2} et la R précision vaut {3}\n".format(
+                    str(queries[i + 1]), str(EF_list[i][0]), EF_list[i][1], R_list[i]))
 
-main()
+if __name__ == "__main__":
+    print('CACM evaluation')
+    collection_path = input("What is the path of the CACM collection ? ")
+    stopwords_path = "CACM/common_words"
+    main(collection_path,stopwords_path)
                 
 
 

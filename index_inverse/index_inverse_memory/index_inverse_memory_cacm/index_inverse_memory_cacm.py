@@ -72,7 +72,6 @@ if __name__ == "__main__":
     collection_path = input("What is the path of the CACM collection ? ")
     stopwords_path = input("What is the path of the Stopwords for CACM collection ? ")
     index = constructmemory_index_CACM(collection_path, stopwords_path)
-    print(index)
     
 
 

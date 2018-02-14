@@ -60,15 +60,19 @@ class Evaluation():
     @staticmethod
     def emeasure(recall, precision, beta):
         """Computes E measure for a precision, rappel and beta"""
-        print(recall)
-        print(precision)
-        em = 1 - (beta**2+1)*precision*recall/float(beta**2*precision+recall)
+        try:
+            em = 1 - (beta**2+1)*precision*recall/float(beta**2*precision+recall)
+        except ZeroDivisionError:
+            em = None
         return em
 
     @staticmethod
     def fmeasure(recall, precision, beta):
         """Computes F measure for a precision, rappel and beta"""
-        fm = (beta**2+1)*precision*recall/float(beta**2*precision+recall)
+        try:
+            fm = (beta**2+1)*precision*recall/float(beta**2*precision+recall)
+        except ZeroDivisionError:
+            fm = None
         return fm
 
     def compute_measures(self, index, k):
@@ -85,13 +89,19 @@ class Evaluation():
         #Computes global precision and recall for the query
         print(current_nb_relevant_doc_found)
         precision = current_nb_relevant_doc_found/float(k)
-        recall = current_nb_relevant_doc_found/float(total_nb_relevant_doc)
+        try:
+            recall = current_nb_relevant_doc_found/float(total_nb_relevant_doc)
+        except ZeroDivisionError:
+            recall = 0
 
         #Computes E measure, F measure
         em = self.emeasure(recall, precision, 1)
         fm = self.fmeasure(recall, precision, 1)
 
-        return (em,fm)
+        if total_nb_relevant_doc == 0:
+            return (None,None)
+        else:
+            return (em,fm)
 
 
     def rprecision(self,index):
@@ -107,8 +117,10 @@ class Evaluation():
                 current_nb_relevant_doc_found += 1
             if i == total_nb_relevant_doc:
                 break
-
-        r = current_nb_relevant_doc_found/float(total_nb_relevant_doc)
+        if total_nb_relevant_doc == 0:
+            r = 0
+        else:
+            r = current_nb_relevant_doc_found/float(total_nb_relevant_doc)
         return r
 
 

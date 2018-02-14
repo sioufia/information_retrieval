@@ -14,7 +14,7 @@ def search_engine():
     if collection == "cacm":
         type_of_index_building = input("Which type of building do you want to use to make your index ? (bsbi/mapreduce/memory) : ")
         collection_path = input("What is the path of the CACM collection ? ")
-        stopwords_path = input("What is the path of the Stopwords for CACM collection ? ")
+        stopwords_path = "CACM/common_words"
 
         if type_of_index_building == "bsbi":
             index_folder = input("In which folder do you want to create CACM index ? : ")
@@ -25,19 +25,25 @@ def search_engine():
             index = constructmemory_index_CACM(collection_path, stopwords_path)
         else:
             raise ValueError("Not a type of index building allowed")
-        
+
+
+        #### STATISTICS #####
         # half_collection is only used to estimate the size of voc for half the collection
-            # index.half_collection()
+        # index.half_collection()
+        # To compute range frequency plot, number of tokens and words in the dictionnary only if it is the memory index
+        # index.rang_freq()
+        # print("There are {} tokens in the collection".format(str(index.nb_tokens)))
+        # print("There are {} distinct words in the vocabulary".format(str(index.size_voc())))
 
-            #To compute range frequency plot
-            #index.rang_freq()  #Need to debug
-
-            #print("There are {} tokens in the collection".format(str(index.nb_tokens))) #Need to debug
-            #print("There are {} distinct words in the vocabulary".format(str(index.size_voc()))) #Need to debug
-    
     elif collection == "stanford":
         path = input("Path for stanford collection ?")
         index = constructmemory_index_Stanford(path)
+
+        #### STATISTICS #####
+        # index.rang_freq()
+        # print("There are {} tokens in the collection".format(str(index.nb_tokens)))
+        # print("There are {} distinct words in the vocabulary".format(str(index.size_voc())))
+
     
     else:
         raise ValueError("Not a collection allowed")

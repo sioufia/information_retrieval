@@ -1,11 +1,14 @@
 from math import *
+import matplotlib.pyplot as plt
 import nltk
+from operator import itemgetter
 
 class IndexInverseCommon:
     def __init__(self):
         self.D_terme_termeid = {}
         self.D_terme_id_postings = {}
         self.nb_doc = 1
+        self.collection_dic = {}
         
     def weight_calculation_index(self):
         "Method that calculates the weight of each term in each doc of the inverse doc."
@@ -43,6 +46,47 @@ class IndexInverseCommon:
         for t in self.D_terme_id_postings:
             for d in self.D_terme_id_postings[t]:
                 d[1] *= nd[d[0]] # stock the weight normalized
+
+    def rang_freq(self):
+        """"Method that computes the range frequency plot for all tokens in collection"""
+        # Retrieving tokens and frequencies
+        l = []
+        print(self.D_terme_id_postings)
+        for k, v in self.D_terme_id_postings.items():
+            f = 0
+            for t in v:
+                f += t[1]
+            l += [(k, f)]
+
+        # Sorting by frequency
+        l = sorted(l, key=itemgetter(1), reverse=True)
+
+        # Constructino freq and range lists
+        rang = []
+        freq = []
+        rang_log = []
+        freq_log = []
+        for i in range(len(l)):
+            rang += [i + 1]
+            freq += [l[i][1]]
+            rang_log += [log(i+1,10)]
+            freq_log += [log(l[i][1],10)]
+
+        plt.scatter(rang, freq)
+        plt.title('Range vs Frequency')
+        plt.xlabel('Range')
+        plt.ylabel('Frequency')
+        plt.show()
+
+        plt.scatter(rang_log, freq_log)
+        plt.title('Log Range vs Log Frequency')
+        plt.xlabel('Log Range')
+        plt.ylabel('Log Frequency')
+        plt.show()
+
+    def size_voc(self):
+        """Method to return the size of the vocabulary"""
+        return len(self.D_terme_id_postings.keys())
 
 class IndexInverseCommonCacm(IndexInverseCommon):
     def __init__(self, collection_dic = {}):
@@ -98,7 +142,7 @@ class IndexInverseCommonCacm(IndexInverseCommon):
         self.nb_doc = len(self.collection_dic)
     
     def half_collection(self):
-        """Method to use half the collection"""
+        """Method to use half the collection for cacm"""
         self.half_collection_dic = {}
         n = len(self.collection_dic.keys())
         i=0
@@ -109,33 +153,27 @@ class IndexInverseCommonCacm(IndexInverseCommon):
             i += 1
         self.collection_dic = self.half_collection_dic
     
-    def rang_freq(self):
-        """"Method that computes the range frequency plot for all tokens in collection"""
-        #Retrieving tokens and frequencies
-        l = []
-        for k,v in self.collection_dic.items():
-            l += [(k,len(v))]
-
-        #Sorting by frequency
-        l = sorted(l, key = itemgetter(1), reverse=True)
-
-        #Constructino freq and range lists
-        rang = []
-        freq = []
-        for i in range(len(l)):
-            rang += [i+1]
-            freq += [l[i][1]]
-
-        print(len(rang))
-        print(len(freq))
-        plt.scatter(rang, freq)
-        plt.title('Range vs Frequency')
-        plt.xlabel('Range')
-        plt.ylabel('Frequency')
-        plt.show()
-
-def size_voc(self):
-        """Method to return the size of the vocabulary"""
-        return len(self.D_terme_id_postings.keys())
+    # def rang_freq(self):
+    #     """"Method that computes the range frequency plot for all tokens in collection"""
+    #     #Retrieving tokens and frequencies
+    #     l = []
+    #     for k,v in self.collection_dic.items():
+    #         l += [(k,len(v))]
+    #
+    #     #Sorting by frequency
+    #     l = sorted(l, key = itemgetter(1), reverse=True)
+    #
+    #     #Constructino freq and range lists
+    #     rang = []
+    #     freq = []
+    #     for i in range(len(l)):
+    #         rang += [i+1]
+    #         freq += [l[i][1]]
+    #
+    #     plt.scatter(rang, freq)
+    #     plt.title('Range vs Frequency')
+    #     plt.xlabel('Range')
+    #     plt.ylabel('Frequency')
+    #     plt.show()
 
 

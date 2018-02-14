@@ -15,9 +15,14 @@ It is divided into 3 main parts:
     
     3/ Evaluation of the query for the collection CACM (folder: evaluation ; file: main_evaluation) :
         - Curve recall/precision
-        - @TITOU
+        - Mean average precision
+        - For each request, it computes E,F measures and R precision. However several queries did not have any
+        relevant documents so these statistics could not be computed.
 
 STEPS TO FOLLOW TO:
+
+/!\ When path for stanford collection is required, enter the path to the folder which contains the blocks,
+    with a "/" at the end of the path. Ex : "...../pa1-data/"
 
     Use the search engine: 
     1/ Go to the folder riproject via your terminal : cd riproject
@@ -44,8 +49,9 @@ STEPS TO FOLLOW TO:
     3rd Method - In memory:
         For CAM
         1/ Go to the folder riproject via your terminal : cd riproject
-        2/ Run the foolowing command via your terminal : python -m index_inverse.index_inverse_memory.index_inverse_memory_cacm.index_inverse_memory_cacm
+        2/ Run the following command via your terminal : python -m index_inverse.index_inverse_memory.index_inverse_memory_cacm.index_inverse_memory_cacm
         For Stanford (run the same command but change the name)
     
     Use the CACM evaluation:
-        @TITOU
+        1/ Go to the folder riproject via your terminal : cd riproject
+        2/ Run main_evaluation.py. Results are printed in the terminal.
